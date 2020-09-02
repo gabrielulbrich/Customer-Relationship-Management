@@ -1,0 +1,50 @@
+FROM php:7.0-fpm
+LABEL maintainer="gabriel_ulbrich@outlook.com"
+
+WORKDIR /var/www/html
+
+# set timezone
+ENV TZ America/Sao_Paulo 
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Get composer ~ /usr/local/bin/composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_HOME=./.composer
+ENV COMPOSER_MEMORY_LIMIT=-1
+
+# Install additional packages
+#RUN apt-get update && apt-get install -y \
+#    vim-tiny cron wget zip unzip libmcrypt-dev sqlite php-sqlite3 \
+#    && apt-get clean && rm -rf /var/lib/apt/lists/
+
+RUN apt-get update && apt-get install -y \
+        vim-tiny cron wget zip unzip curl git \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng-dev \
+        sqlite \
+        libpq-dev \
+    && docker-php-ext-configure mysqli --with-mysqli=mysqlnd \
+    && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
+    && docker-php-ext-configure pdo_pgsql --with-pgsql \
+    && docker-php-ext-install -j$(nproc) iconv mcrypt \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+    #&& docker-php-ext-install exif gd mbstring intl xsl zip mysqli pdo_mysql soap bcmath \
+    && apt-get clean && rm -rf /var/lib/apt/lists/
+
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql
+
+COPY ./.docker/php/etc/crontab.conf /tmp/
+RUN grep -v "^#" /tmp/crontab.conf | crontab 
+
+# entrypoint script
+COPY ./.docker/php/scripts/health-check*.php /tmp/
+COPY ./.docker/php/scripts/docker-entrypoint-local.sh /docker-entrypoint.sh
+RUN chmod 775 /docker-entrypoint.sh
+
+ENTRYPOINT [ "sh", "/docker-entrypoint.sh" ]
+
+CMD ["php-fpm"]

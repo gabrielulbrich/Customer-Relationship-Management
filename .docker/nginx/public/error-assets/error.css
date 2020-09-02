@@ -1,0 +1,167 @@
+body,
+h3,
+h4,
+p,
+a {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  font-family: 'Noto Sans', sans-serif;
+  text-decoration: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1f4f6;
+}
+
+.logo {
+  width: 66px;
+  height: 31px;
+  position: absolute;
+  top: 35px;
+  left: 35px;
+}
+
+.error-wrapper {
+  display: flex;
+}
+
+.error-image {
+  height: 478px;
+  width: 338px;
+  margin-right: 50px;
+}
+
+.copy {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.copy h3 {
+  color: #50585c;
+  font-weight: bold;
+  font-size: 3.75rem;
+  line-height: 3.75rem;
+  margin-bottom: 15px;
+}
+
+.copy h4 {
+  color: #818b95;
+  font-size: 2.2rem;
+  line-height: 2.2rem;
+  margin-bottom: 14px;
+}
+
+.copy p {
+  color: #a6aeb3;
+  font-size: 1.12rem;
+  line-height: 1.12rem;
+  margin-bottom: 44px;
+}
+
+.copy p a {
+  color: #62b5cd;
+  text-decoration: underline;
+}
+
+.copy .back-btn {
+  height: 42px;
+  line-height: 42px;
+  width: 145px;
+  text-align: center;
+  font-size: 1rem;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 21px;
+  background-color: #566f9d;
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .error-image {
+    height: 320px;
+    width: 226px;
+    margin-right: 30px;
+  }
+
+  .copy {
+    width: 330px;
+  }
+
+  .copy h3 {
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .copy h4 {
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+    margin-bottom: 10px;
+  }
+
+  .copy p {
+    font-size: 0.8rem;
+    line-height: 1rem;
+    margin-bottom: 35px;
+  }
+
+  .copy .back-btn {
+    height: 34px;
+    line-height: 34px;
+    width: 110px;
+    font-size: 0.7rem;
+    border-radius: 17px;
+  }
+}
+
+/* Mobile */
+@media only screen and (max-width: 768px) {
+  .error-wrapper {
+    flex-direction: column;
+  }
+
+  .error-image {
+    align-self: center;
+    height: 250px;
+    width: 177px;
+    margin: 0 0 45px 0;
+  }
+
+  .copy {
+    width: 320px;
+    text-align: center;
+  }
+
+  .copy h3 {
+    font-size: 2.75rem;
+    line-height: 2.75rem;
+    margin-bottom: 8px;
+  }
+
+  .copy h4 {
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+    margin-bottom: 8px;
+  }
+
+  .copy p {
+    font-size: 0.8rem;
+    line-height: 1.12rem;
+    margin-bottom: 30px;
+  }
+
+  .copy .back-btn {
+    align-self: center;
+  }
+}

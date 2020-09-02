@@ -1,0 +1,25 @@
+FROM nginx:1.17
+LABEL maintainer="gabriel_ulbrich@outlook.com"
+
+# install additional packages
+RUN apt-get update && apt-get install -y \
+    curl \
+    openssl \
+    libmcrypt-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists
+
+# add nginx settings
+COPY ./.docker/nginx/etc/nginx.conf /etc/nginx/
+COPY ./.docker/nginx/etc/default-local.conf /etc/nginx/conf.d/default.conf
+RUN mkdir -p /var/nginx/cache && chmod 777 /var/nginx/cache
+
+# Add self signed certificate for localhost usage
+COPY ./.docker/nginx/certs/selfsigned/localhost.csr /etc/nginx/ssl/
+COPY ./.docker/nginx//certs/selfsigned/localhost.key /etc/nginx/ssl/
+
+# generate crt on build container
+RUN openssl x509 -req -days 365 -in /etc/nginx/ssl/localhost.csr -signkey /etc/nginx/ssl/localhost.key -out /etc/nginx/ssl/localhost.crt
+
+WORKDIR /var/www/html
+
+EXPOSE 80 443 3000
