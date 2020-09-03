@@ -22,4 +22,4 @@ RUN openssl x509 -req -days 365 -in /etc/nginx/ssl/localhost.csr -signkey /etc/n
 
 WORKDIR /var/www/html
 
-EXPOSE 80 443 3000
+EXPOSE 80 443 8000
