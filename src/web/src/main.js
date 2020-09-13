@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from '../../router';
+import router from './router';
+import store from "./store";
 import AutoComplete from 'primevue/autocomplete';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
@@ -150,5 +151,6 @@ Vue.component('TriStateCheckbox', TriStateCheckbox);
 
 new Vue({
 	router,
+	store,
 	render: h => h(App)
 }).$mount('#app');

@@ -87,68 +87,6 @@ Vue.prototype.$primevue = Vue.observable({ripple: true});
 
 Vue.config.productionTip = false;
 
-Vue.component('Accordion', Accordion);
-Vue.component('AccordionTab', AccordionTab);
-Vue.component('AutoComplete', AutoComplete);
-Vue.component('Breadcrumb', Breadcrumb);
-Vue.component('Button', Button);
-Vue.component('Calendar', Calendar);
-Vue.component('Card', Card);
-Vue.component('Carousel', Carousel);
-Vue.component('Chart', Chart);
-Vue.component('Checkbox', Checkbox);
-Vue.component('Chips', Chips);
-Vue.component('ColorPicker', ColorPicker);
-Vue.component('Column', Column);
-Vue.component('ContextMenu', ContextMenu);
-Vue.component('DataTable', DataTable);
-Vue.component('DataView', DataView);
-Vue.component('DataViewLayoutOptions', DataViewLayoutOptions);
-Vue.component('Dialog', Dialog);
-Vue.component('Dropdown', Dropdown);
-Vue.component('Fieldset', Fieldset);
-Vue.component('FileUpload', FileUpload);
-Vue.component('FullCalendar', FullCalendar);
-Vue.component('InlineMessage', InlineMessage);
-Vue.component('Inplace', Inplace);
-Vue.component('InputMask', InputMask);
-Vue.component('InputNumber', InputNumber);
-Vue.component('InputSwitch', InputSwitch);
-Vue.component('InputText', InputText);
-Vue.component('Listbox', Listbox);
-Vue.component('MegaMenu', MegaMenu);
-Vue.component('Menu', Menu);
-Vue.component('Menubar', Menubar);
-Vue.component('Message', Message);
-Vue.component('MultiSelect', MultiSelect);
-Vue.component('OrderList', OrderList);
-Vue.component('OrganizationChart', OrganizationChart);
-Vue.component('OverlayPanel', OverlayPanel);
-Vue.component('Paginator', Paginator);
-Vue.component('Panel', Panel);
-Vue.component('PanelMenu', PanelMenu);
-Vue.component('Password', Password);
-Vue.component('PickList', PickList);
-Vue.component('ProgressBar', ProgressBar);
-Vue.component('RadioButton', RadioButton);
-Vue.component('Rating', Rating);
-Vue.component('SelectButton', SelectButton);
-Vue.component('Slider', Slider);
-Vue.component('Sidebar', Sidebar);
-Vue.component('SplitButton', SplitButton);
-Vue.component('Steps', Steps);
-Vue.component('TabMenu', TabMenu);
-Vue.component('TabView', TabView);
-Vue.component('TabPanel', TabPanel);
-Vue.component('Textarea', Textarea);
-Vue.component('TieredMenu', TieredMenu);
-Vue.component('Toast', Toast);
-Vue.component('Toolbar', Toolbar);
-Vue.component('ToggleButton', ToggleButton);
-Vue.component('Tree', Tree);
-Vue.component('TreeTable', TreeTable);
-Vue.component('TriStateCheckbox', TriStateCheckbox);
-
 new Vue({
 	router,
 	render: h => h(App)

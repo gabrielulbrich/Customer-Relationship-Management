@@ -14,6 +14,11 @@ export default new Router({
 			component: () => import('./components/EmptyPage.vue')
 		},
 		{
+			path: '/login',
+			name: 'dashboard',
+			component: () => import('./views/Login.vue')
+		},
+		{
 			path: '/formlayout',
 			name: 'formlayout',
 			component: () => import('./components/FormLayoutDemo.vue')
