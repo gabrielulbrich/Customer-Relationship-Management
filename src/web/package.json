@@ -18,7 +18,7 @@
     "@fullcalendar/timegrid": "4.0.1",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-plugin-unit-jest": "^4.5.6",
+    "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "^3.8.0",
     "@vue/test-utils": "^1.0.3",
     "axios": "^0.19.0",
@@ -28,6 +28,7 @@
     "chart.js": "2.7.3",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "jest-css-modules": "^2.1.0",
     "node-sass": "^4.9.0",
     "primeflex": "2.0.0-rc.1",
     "primeicons": "4.0.0",
@@ -44,11 +45,27 @@
     "moduleFileExtensions": [
       "js",
       "json",
-      "vue"
+      "vue",
+      "jsx"
+    ],
+    "setupFiles": [
+      "<rootDir>/tests/env-setup.js"
     ],
     "transform": {
-      ".*\\.(vue)$": "vue-jest"
+      ".*\\.(vue)$": "vue-jest",
+      ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
+      "^.+\\.(js|jsx)?$": "babel-jest"
     },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
+    },
+    "snapshotSerializers": [
+      "jest-serializer-vue"
+    ],
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!vue-awesome|primevue)"
+    ],
     "preset": "@vue/cli-plugin-unit-jest"
   },
   "license": "MIT",

@@ -10,13 +10,18 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'dashboard',
-			component: () => import('./components/EmptyPage.vue')
+			name: 'dashboard or login',
+			component: () => import('./views/Crm/App.vue')
 		},
 		{
 			path: '/login',
-			name: 'dashboard',
+			name: 'Login',
 			component: () => import('./views/Login.vue')
+		},
+		{
+			path: '/registrar',
+			name: 'Register User',
+			component: () => import('./views/Register.vue')
 		},
 		{
 			path: '/formlayout',

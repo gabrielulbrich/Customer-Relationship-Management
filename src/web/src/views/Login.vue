@@ -1,9 +1,9 @@
 <template>
 		<div class="p-grid p-mt-6 p-jc-center">
-			<div class="p-col-fixed"  style="width:400px;">
+			<div class="p-col-fixed"  style="width:450px;">
                 <div class="card p-fluid">
-                    <div v-if="!criar">
-                        <h5>Entrar</h5>
+                    <div>
+                        <h5 class="h2">Entrar</h5>
                         <div class="p-field">
                             <label for="name1">Login</label>
                             <InputText id="name1" type="text" />
@@ -14,24 +14,21 @@
                         </div>
                         <Button label="Login" class="p-mr-2 p-mb-2"/>
                         <div class="p-d-flex p-jc-between p-mt-3">
-                            <Button label="esqueci minha senha" class="p-button-secondary p-button-text p-mr-3" />
-                            <Button @click="criar = true" label="ainda não tenho uma conta" class="p-button-secondary p-button-text p-ml-3" />
+                            <Button label="esqueci minha senha" class="p-button-secondary p-button-text p-text-left" />
+                            <router-link to="/registrar" style="width: 430px;">
+                                <Button label="ainda não tenho uma conta" class="p-button-secondary p-button-text p-text-right" />
+                            </router-link>
                         </div>
                     </div>
-                    <CadastrarUsuarioForm v-else v-on:criar="voltarLogin">
-                        <Button label="Criar Usuário" class="p-mr-2 p-mb-2"/>
-                    </CadastrarUsuarioForm>
                 </div>
 			</div>
 		</div>
 </template>
 
 <script>
-import CadastrarUsuarioForm from "@/components/CadastrarUsuarioForm.vue";
 
 export default {
   name: "Login",
-  components: { CadastrarUsuarioForm },
   data() {
     return {
       criar: false,
@@ -39,9 +36,7 @@ export default {
     };
   },
   methods: {
-      voltarLogin() {
-          this.criar = false
-      }
+
   }
 }
 </script>
