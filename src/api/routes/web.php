@@ -12,5 +12,11 @@
 */
 
 $router->get('/', function () use ($router) {
-    return 'test';
+    return $router->app->version();
 });
+
+$router->post('/api/login', 'UserController@login');
+
+$router->post('/api/user', 'UserController@store');
+$router->get('/api/user/{id}', 'UserController@view');
+$router->put('/api/user/{id}', 'UserController@update');
