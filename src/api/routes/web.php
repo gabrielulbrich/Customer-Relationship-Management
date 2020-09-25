@@ -17,6 +17,8 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->get('me', 'AuthController@me');
+    $router->get('refresh', 'AuthController@refresh');
+    $router->get('logout', 'AuthController@logout');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
