@@ -15,8 +15,20 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->post('/api/login', 'UserController@login');
+$router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
+    $router->get('me', 'AuthController@me');
+});
 
-$router->post('/api/user', 'UserController@store');
-$router->get('/api/user/{id}', 'UserController@view');
-$router->put('/api/user/{id}', 'UserController@update');
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->post('register', 'AuthController@register');
+    $router->post('login', 'AuthController@login');
+
+//    $router->post('/api/login', 'UserController@login');
+//
+//    $router->post('/api/user', 'UserController@store');
+//    $router->get('/api/user/{id}', 'UserController@view');
+//    $router->put('/api/user/{id}', 'UserController@update');
+});
+
+
+
