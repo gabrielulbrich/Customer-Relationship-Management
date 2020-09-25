@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const url = "https://ranekapi.origamid.dev/wp-json";
+const url = "http://localhost:8000";
 
 const axiosInstance = axios.create({
-  baseURL: url + "/api"
+  baseURL: url + "/api",
 });
 
 axiosInstance.interceptors.request.use(
@@ -32,12 +32,6 @@ export const api = {
   delete(endpoint) {
     return axiosInstance.delete(endpoint);
   },
-  login(body) {
-    return axios.post(url + "/jwt-auth/v1/token", body);
-  },
-  validateToken() {
-    return axiosInstance.post(url + "/jwt-auth/v1/token/validate");
-  }
 };
 
 export function getCep(cep) {

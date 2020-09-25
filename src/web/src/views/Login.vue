@@ -5,14 +5,14 @@
                     <div>
                         <h5 class="h2">Entrar</h5>
                         <div class="p-field">
-                            <label for="name1">Login</label>
-                            <InputText id="name1" type="text" />
+                            <label for="email">Login</label>
+                            <InputText id="email" type="email" v-model="login.email" />
                         </div>
                         <div class="p-field">
-                            <label for="email1">Senha</label>
-                            <InputText id="email1" type="password" />
+                            <label for="password">Senha</label>
+                            <InputText id="password" type="password" v-model="login.password" />
                         </div>
-                        <Button label="Login" class="p-mr-2 p-mb-2"/>
+                        <Button label="Login" class="p-mr-2 p-mb-2" @click.prevent="loginUser" />
                         <div class="p-d-flex p-jc-between p-mt-3">
                             <Button label="esqueci minha senha" class="p-button-secondary p-button-text p-text-left" />
                             <router-link to="/registrar" style="width: 430px;">
@@ -26,18 +26,31 @@
 </template>
 
 <script>
+import { mapFields } from "@/helpers.js";
+import {mapGetters, mapState} from 'vuex';
 
 export default {
   name: "Login",
   data() {
     return {
+      login: {
+        email: "",
+        password: ""
+      },
       criar: false,
       erros: []
     };
   },
   methods: {
-
-  }
+    loginUser() {
+      this.$store.dispatch("loginUser", this.login).then(() => {
+        this.$store.dispatch("getUser");
+        this.$router.push({ name: "dashboard" });
+      }).catch(error => {
+        this.erros.push(error.response.data.message);
+      });
+    }
+  },
 }
 </script>
 

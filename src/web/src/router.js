@@ -1,16 +1,20 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from "@/store";
 // import Dashboard from './components/Dashboard.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
 	mode: "history",
 	base: process.env.BASE_URL,
 	routes: [
 		{
 			path: '/',
-			name: 'dashboard or login',
+			name: 'dashboard',
+			meta: {
+				requiresAuth: true
+			},
 			component: () => import('./views/Crm/App.vue')
 		},
 		{
@@ -168,3 +172,19 @@ export default new Router({
 		return {x: 0, y: 0};
 	}
 });
+
+router.beforeEach((to, from, next) => {
+	console.log(store.getters.isAuth)
+	if (to.matched.some(record => record.meta.requiresAuth)) {
+		// console.log(store.getters.email)
+		if (!window.localStorage.token) {
+			next("/login");
+		} else {
+			next();
+		}
+	} else {
+		next();
+	}
+  });
+
+export default router;
