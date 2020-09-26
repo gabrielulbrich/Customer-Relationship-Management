@@ -10,14 +10,6 @@ const router = new Router({
 	base: process.env.BASE_URL,
 	routes: [
 		{
-			path: '/',
-			name: 'dashboard',
-			meta: {
-				requiresAuth: true
-			},
-			component: () => import('./views/Crm/App.vue')
-		},
-		{
 			path: '/login',
 			name: 'Login',
 			component: () => import('./views/Login.vue')
@@ -26,6 +18,14 @@ const router = new Router({
 			path: '/registrar',
 			name: 'Register User',
 			component: () => import('./views/Register.vue')
+		},
+		{
+			path: '/',
+			name: 'dashboard',
+			meta: {
+				requiresAuth: true
+			},
+			component: () => import('./views/Crm/App.vue')
 		},
 		{
 			path: '/formlayout',
@@ -174,10 +174,8 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-	console.log(store.getters.isAuth)
 	if (to.matched.some(record => record.meta.requiresAuth)) {
-		// console.log(store.getters.email)
-		if (!window.localStorage.token) {
+		if (!window.localStorage.token || !store.state.authenticated) {
 			next("/login");
 		} else {
 			next();

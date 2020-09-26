@@ -15,11 +15,6 @@ const store = new Vuex.Store({
     },
     usuario_produtos: null
   },
-  getters: {
-    isAuth: state => {
-      return state.authenticated
-    }
-  },
   mutations: {
     UPDATE_LOGIN(state, payload) { 
       state.authenticated = payload;

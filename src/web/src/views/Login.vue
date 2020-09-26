@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import { mapFields } from "@/helpers.js";
-import {mapGetters, mapState} from 'vuex';
 
 export default {
   name: "Login",
@@ -42,13 +40,17 @@ export default {
     };
   },
   methods: {
-    loginUser() {
-      this.$store.dispatch("loginUser", this.login).then(() => {
-        this.$store.dispatch("getUser");
-        this.$router.push({ name: "dashboard" });
-      }).catch(error => {
+    redirectToDashBoard() {
+      this.$router.push({ name: "dashboard" });
+    },
+    async loginUser() {
+      try{
+        await this.$store.dispatch("loginUser", this.login)
+        await this.$store.dispatch("getUser");
+        await this.redirectToDashBoard();
+      } catch (error) {
         this.erros.push(error.response.data.message);
-      });
+      }
     }
   },
 }
