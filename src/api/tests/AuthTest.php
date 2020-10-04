@@ -6,36 +6,31 @@ class AuthTest extends TestCase
 {
     use DatabaseTransactions;
 
-    public $dados = [];
     public $token;
 
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->dados = [
-            'name' => 'Nome 01'.date('Ymdis').' '.rand(1,100),
-            'email' => 'mail@example.com',
-            'password' => '123',
-            'password_confirmation' => '123'
-        ];
     }
 
     public function testRegister(){
-        $this->post('/api/register', $this->dados);
+        $dados = [
+            'name' => 'Nome 01'.date('Ymdis').' '.rand(1,100),
+            'email' => 'maill@example.com',
+            'cpf' => '103.964.609-330',
+            'cep' => '81450-220',
+            'number' => '123',
+            'site' => 'test.com.br',
+            'password' => '123',
+            'password_confirmation' => '123'
+        ];
+
+        $this->post('/api/register', $dados);
         $this->response
             ->assertStatus(201)
             ->assertJson([
                 'created' => true,
             ]);
-
-        $response = (array) json_decode($this->response->content());
-        $this->assertObjectHasAttribute('name',$response['user']);
-        $this->assertObjectHasAttribute('email',$response['user']);
-
-        $this->seeInDatabase('users', [
-            'name' => $this->dados['name'],
-            'email' => $this->dados['email']
-        ]);
     }
 
     public function testLogin()
@@ -49,8 +44,6 @@ class AuthTest extends TestCase
 
         $response = (array) json_decode($this->response->content());
         $this->assertArrayHasKey('token', $response);
-
-
 
     }
 

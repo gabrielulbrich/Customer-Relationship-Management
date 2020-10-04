@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+//use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Validator;
 use  App\User;
 
 class AuthController extends Controller
@@ -21,21 +24,32 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        //validate incoming request
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
+            'cpf' => 'required|string',
+            'cep' => 'required|string',
+            'number' => 'required|string',
+            'site' => 'required|string',
         ]);
 
-        try {
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
 
+        try {
             $user = new User;
             $user->name = $request->input('name');
             $user->email = $request->input('email');
+            $user->cpf = $request->input('cpf');
+            $user->profile_id = 2;
+            $user->cep = $request->input('cep');
+            $user->number = $request->input('number');
+            $user->complement = $request->input('complement');
+            $user->site = $request->input('site');
             $plainPassword = $request->input('password');
             $user->password = app('hash')->make($plainPassword);
-
             $user->save();
 
             //return successful response
@@ -56,20 +70,23 @@ class AuthController extends Controller
      * Get a JWT via given credentials.
      *
      * @param  Request  $request
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function login(Request $request)
     {
-        //validate incoming request
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
         $credentials = $request->only(['email', 'password']);
 
         if (! $token = Auth::attempt($credentials)) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['error' => [ 'auth' => 'E-mail ou senha incorretos']], 401);
         }
         return $this->respondWithToken($token);
     }
