@@ -7,5 +7,5 @@ RUN npm config set strict-ssl false
 RUN npm install -g @vue/cli@latest @vue/cli-service-global
 RUN npm install
 COPY ./src/web/ .
-EXPOSE 8080
+EXPOSE 3000
 CMD [ "npm", "run", "serve" ]

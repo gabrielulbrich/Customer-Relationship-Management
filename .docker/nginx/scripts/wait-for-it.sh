@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-containers=( "web:8080" )
+containers=( "web:3000" )
 #containers=( "web:3000" "engine:8080" "graphql:5000/health" "api:8080/api" )
 
 for CONTAINER in "${containers[@]}"; do

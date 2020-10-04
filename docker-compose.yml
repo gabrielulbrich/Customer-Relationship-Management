@@ -21,17 +21,13 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
     volumes:
       - ./.docker/mysql/dump/:/docker-entrypoint-initdb.d/:rw
-    logging:
-      driver: none
 
   adminer:
     container_name: ${APP_NAME}-adminer
     image: adminer
     restart: always
     ports:
-      - 8081:8081
-    logging:
-      driver: none
+      - 8080:8080
 
   web:
     container_name: ${APP_NAME}-web
@@ -40,7 +36,7 @@ services:
       dockerfile: ./.docker/web/Dockerfile.local
       context: .
     ports:
-      - '8080:8080'
+      - '3000:3000'
     volumes:
       - ./src/web:/app
       - /app/node_modules
