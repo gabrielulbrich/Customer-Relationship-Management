@@ -12,6 +12,7 @@ const store = new Vuex.Store({
       nome: "",
       email: "",
       senha: "",
+      site: ""
     },
     usuario_produtos: null
   },
@@ -39,6 +40,12 @@ const store = new Vuex.Store({
         context.commit("UPDATE_USUARIO", response.data);
         context.commit("UPDATE_LOGIN", true);
       });
+    },
+    registerUser(context, payload){
+      return api.post(`/register`, payload)
+      .then(response => {
+        context.commit("UPDATE_USUARIO", payload)
+      })
     },
     refreshToken(context){
       return api.get(`/refresh`)
