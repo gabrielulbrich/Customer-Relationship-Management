@@ -45,12 +45,11 @@ export default {
   },
   methods: {
     redirectToDashBoard() {
-      this.$router.push({ path: "/volvo" });
+      this.$router.push({ path: this.$store.getters.pageName });
     },
     async loginUser() {
       try{
-        await this.$store.dispatch("loginUser", this.login)
-        await this.$store.dispatch("getUser");
+        await this.$store.dispatch("loginUser", this.login);
         await this.redirectToDashBoard();
       } catch (error) {
         this.errors = [];

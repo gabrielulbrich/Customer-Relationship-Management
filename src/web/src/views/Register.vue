@@ -98,7 +98,7 @@ export default {
     },
     methods: {
         redirectToDashBoard() {
-            this.$router.push({ path: "/volvo" });
+            this.$router.push({ name: "dashboard" });
         },
         async registerUser(event){
             this.erros = [];

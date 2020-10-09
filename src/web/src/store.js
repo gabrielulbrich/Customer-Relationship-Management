@@ -7,22 +7,39 @@ const store = new Vuex.Store({
   strict: true,
   state: {
     authenticated: false,
-    usuario: {
+    user: {
       id: "",
       nome: "",
       email: "",
-      senha: "",
+      profile: {
+        id: "",
+        profile: "",
+      },
+    },
+    page: {
+      id: "",
+      name: "",
       site: ""
     },
-    usuario_produtos: null
+  },
+  getters: {
+    pageName: state => {
+      return state.page.site.split('.')[0]
+    }
   },
   mutations: {
     UPDATE_LOGIN(state, payload) { 
       state.authenticated = payload;
     },
-    UPDATE_USUARIO(state, payload) {
-      state.usuario = Object.assign(state.usuario, payload);
+    UPDATE_USER(state, payload) {
+      state.user = Object.assign(state.user, payload);
     },
+    UPDATE_PAGE(state, payload) {
+      state.page = Object.assign(state.page, payload);
+    },
+    UPDATE_PROFILE(state, payload){
+      state.user.profile = Object.assign(state.user.profile, payload);
+    }
   },
   actions: {
     loginUser(context, payload) {
@@ -31,20 +48,26 @@ const store = new Vuex.Store({
         password: payload.password
       })
       .then(response => {
-        window.localStorage.token = `Bearer ${response.data.token}`;
+        window.localStorage.token = `Bearer ${response.data.token.original.token}`;
+        context.commit("UPDATE_USER", response.data.user);
+        context.commit("UPDATE_PAGE", response.data.page);
+        context.commit("UPDATE_PROFILE", response.data.profile);
+        context.commit("UPDATE_LOGIN", true);
       })
     },
     getUser(context) {
       return api.get(`/me`)
       .then(response => {
-        context.commit("UPDATE_USUARIO", response.data);
+        context.commit("UPDATE_USER", response.data.user);
+        context.commit("UPDATE_PAGE", response.data.page);
+        context.commit("UPDATE_PROFILE", response.data.profile);
         context.commit("UPDATE_LOGIN", true);
       });
     },
     registerUser(context, payload){
       return api.post(`/register`, payload)
       .then(response => {
-        context.commit("UPDATE_USUARIO", payload)
+        context.commit("UPDATE_USER", response)
       })
     },
     refreshToken(context){
