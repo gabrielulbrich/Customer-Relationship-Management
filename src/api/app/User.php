@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password', 'pivot'
     ];
 
     /**
@@ -49,5 +49,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function page()
+    {
+        return $this->belongsToMany('App\Page','users_pages');
+    }
+
+    public function profile(){
+        return $this->belongsToMany('App\Profile','users_pages');
     }
 }

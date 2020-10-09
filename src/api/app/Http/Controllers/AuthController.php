@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -31,7 +32,6 @@ class AuthController extends Controller
             'cpf' => 'required|string',
             'cep' => 'required|string',
             'number' => 'required|string',
-            'site' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -47,7 +47,6 @@ class AuthController extends Controller
             $user->cep = $request->input('cep');
             $user->number = $request->input('number');
             $user->complement = $request->input('complement');
-            $user->site = $request->input('site');
             $plainPassword = $request->input('password');
             $user->password = app('hash')->make($plainPassword);
             $user->save();
@@ -88,19 +87,30 @@ class AuthController extends Controller
         if (! $token = Auth::attempt($credentials)) {
             return response()->json(['error' => [ 'auth' => 'E-mail ou senha incorretos']], 401);
         }
-        return $this->respondWithToken($token);
+        $user = User::find(Auth::id());
+        return response()->json([
+            'user'      => $user->first(),
+            'page'      => $user->page->first(),
+            'profile'   => $user->profile->first(),
+            'token'     => $this->respondWithToken($token)
+        ]);
     }
 
 
     /**
      * Get user details.
      *
-     * @param  Request  $request
-     * @return Response
+     *
+     * @return \Illuminate\Http\JsonResponse
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = User::find(Auth::id());
+        return response()->json([
+            'user' => $user->first(),
+            'page' => $user->page->first(),
+            'profile' => $user->profile->first(),
+        ]);
     }
 
 
