@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     authenticated: false,
     user: {
       id: "",
-      nome: "",
+      name: "",
       email: "",
       profile: {
         id: "",
