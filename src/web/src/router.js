@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from "@/store";
-// import Dashboard from './components/Dashboard.vue';
+import Board from './views/Crm/Board/Board.vue';
 
 Vue.use(Router);
 
@@ -29,7 +29,13 @@ const router = new Router({
 			meta: {
 				requiresAuth: true
 			},
-			component: () => import('./views/Crm/App.vue')
+			component: () => import('./views/Crm/App.vue'),
+			children: [
+				{
+					path: 'board',
+					component: Board
+				},
+			]
 		},
 	],
 	scrollBehavior() {
