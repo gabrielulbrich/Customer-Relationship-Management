@@ -19,8 +19,6 @@
 			<router-view />
 		</div>
 
-		<AppConfig :layoutMode="layoutMode" :layoutColorMode="layoutColorMode" @layout-change="onLayoutChange" @layout-color-change="onLayoutColorChange"/>
-
 		<AppFooter />
 	</div>
 </template>
@@ -29,7 +27,6 @@
 import AppTopBar from './AppTopbar.vue';
 import AppProfile from './AppProfile.vue';
 import AppMenu from './AppMenu.vue';
-import AppConfig from './AppConfig.vue';
 import AppFooter from './AppFooter.vue';
 
 export default {
@@ -41,7 +38,8 @@ export default {
             overlayMenuActive: false,
             mobileMenuActive: false,
             menu : [
-                {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.$store.getters.pageName },
+                {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'+this.$store.getters.pageName },
+                {label: 'Board', icon: 'pi pi-fw pi-table', to: this.$store.getters.pageName+'/board'},
                 {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/chart'},
                 {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://www.primefaces.org/sigma-vue/#/"}}
             ]
@@ -160,7 +158,6 @@ export default {
         'AppTopBar': AppTopBar,
         'AppProfile': AppProfile,
         'AppMenu': AppMenu,
-        'AppConfig': AppConfig,
         'AppFooter': AppFooter,
     }
 }
