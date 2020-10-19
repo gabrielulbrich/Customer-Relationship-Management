@@ -8,66 +8,103 @@
 				<div class="box">EM PROGRESSO</div>
 			</div>
 			<div class="p-col">
+				<div class="box">BLOQUEADO</div>
+			</div>
+			<div class="p-col">
 				<div class="box">FINALIZADO</div>
 			</div>
 		</div>
 		<div class="p-grid">
 			<div class="p-col">
 				<div class="swimlane">
-					<div class="issue" @click="toggleMenuDetail">
-						<div class="issue-content">
-							<div class="issue-key">
-								<span>#76246</span>
+					<div v-if="leads && leads.length" class="leads" key="leads">
+						<div class="lead" v-for="(lead, index) in leads" :key="index">
+							<div v-if="lead.status_id == 1">
+								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
 							</div>
-							<div class="issue-subject">
-								<span>Seminovos - Gabriel Ulbrich - 76246</span>
-							</div>
-							<div class="issue-date">
-								<span>14 Ago</span>
-							</div>
-							<div class="issue-footer">
-								<span class="issue-avatar">
-									<img src="https://jira.uhub.biz/secure/useravatar?avatarId=14125" alt="Assignee: Gabriel Ulbrich">
-								</span>
-								<span class="issue-priority">
-									<img src="https://jira.uhub.biz/images/icons/priorities/highest.svg">
-								</span>
-							</div>
-						</div>		
-						<div class="issue-grabber" style="background-color:#bfe4ff;"></div>				
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="p-col">
-				<div class="swimlane"></div>
+				<div class="swimlane">
+					<div v-if="leads && leads.length" class="leads" key="leads">
+						<div class="lead" v-for="(lead, index) in leads" :key="index">
+							<div v-if="lead.status_id == 2">
+								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="p-col">
-				<div class="swimlane"></div>
+				<div class="swimlane">
+					<div v-if="leads && leads.length" class="leads" key="leads">
+						<div class="lead" v-for="(lead, index) in leads" :key="index">
+							<div v-if="lead.status_id == 3">
+								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="p-col">
+				<div class="swimlane">
+					<div v-if="leads && leads.length" class="leads" key="leads">
+						<div class="lead" v-for="(lead, index) in leads" :key="index">
+							<div v-if="lead.status_id == 4">
+								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<MenuDetail :active="active"/>
+		<MenuDetail :selectedLead="selectedLead" :active="active"/>
 
 	</div>
 </template>
 
 <script>
 import MenuDetail from '@/components/MenuDetail.vue';
+import CardLead from '@/components/CardLead.vue';
+import { api } from "@/services.js";
 
 export default {
+	components: {
+		MenuDetail,
+		CardLead,
+    },
 	data(){
 		return{
-			active: false
+			active: false,
+			selectedLead: null,
+			errors: [],
+			leads: null
 		}
 	},
     methods: {
-        toggleMenuDetail() {
-			this.active = !this.active
-        }
+        toggleMenuDetail(lead) {
+			this.active = !this.active;
+			this.selectedLead = lead;
+		},
+		loadCards(){
+			this.leads = null;
+			this.errors = [];
+			api.get("/leads")
+			.then((response) => {
+				this.leads = response.data.leads;
+			})
+			.catch(error => {
+				console.log('error', error)
+				this.errors.push(error.response);
+			});
+		},		
 	},
-	components: {
-		MenuDetail,
-    }
+	created(){
+		this.loadCards();
+	},
 }
 </script>
 
@@ -83,73 +120,9 @@ export default {
 .swimlane {
 	background-color: #ffffff;
 	text-align: center;
-	padding-top: 1rem;
+	padding-top: 0.5rem;
 	padding-bottom: 1rem;
 	border-radius: 4px;
 	min-height: 100vh;
 }	
-
-
-.issue {
-    padding: 2px 8px 4px 8px;
-    background: #fff;
-    color: #172b4d;
-    cursor: move;
-    display: block;
-    font-size: 14px;
-    line-height: 1.42857143;
-    position: relative;
-    box-shadow: 0 0 1px 0 rgba(9,30,66,0.31), 0 2px 4px -1px rgba(9,30,66,0.25);
-    border-radius: 2px;
-    margin: 5px;
-	text-align: left;
-
-	&-key{
-		font-weight: 600;
-	}
-
-	&-subject {
-		margin-top: 5px;
-	}
-
-	&-grabber{
-		height: 100%;
-		left: 0;
-		position: absolute;
-		text-indent: -9999em;
-		top: 0;
-		width: 3px;
-		border-top-left-radius: 3px;
-		border-bottom-left-radius: 3px;
-		width: 3px;
-		background-color: #bfe4ff;
-		margin: 0;
-		padding: 0;
-	}
-
-	&-footer{
-		margin-top: 10px;
-		margin-right: 4px;
-		margin-bottom: 3px;
-		img{
-			height: 16px;
-			width: 16px;
-			overflow: hidden;
-			margin-right: 4px;
-			margin-bottom: 4px;
-		}
-	}
-}
-
-
-/* 
-
-highsted = https://jira.uhub.biz/images/icons/priorities/highest.svg
-high = https://jira.uhub.biz/images/icons/priorities/high.svg
-medium = https://jira.uhub.biz/images/icons/priorities/medium.svg
-low = https://jira.uhub.biz/images/icons/priorities/low.svg
-
-
-
-*/
 </style>
