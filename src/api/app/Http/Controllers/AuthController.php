@@ -43,7 +43,6 @@ class AuthController extends Controller
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->cpf = $request->input('cpf');
-            $user->profile_id = 2;
             $user->cep = $request->input('cep');
             $user->number = $request->input('number');
             $user->complement = $request->input('complement');

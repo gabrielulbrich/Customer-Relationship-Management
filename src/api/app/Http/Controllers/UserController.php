@@ -7,32 +7,24 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    public function store(Request $request){
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|unique:users|max:255',
-            'password' => 'required|confirmed|max:255'
-        ]);
-        $user = new User($request->all());
-//        $user->api_token = str_random(60);
-        $user->save();
-        return $user;
-    }
-
-
 
     public function view($id) {
         return User::find($id);
+    }
+
+    public function getUsers(Request $request){
+        if (!empty($request->input('username'))){
+            $users = User::select( 'name','email', 'avatar_url' )
+                ->where( "email", "LIKE", "%{$request->input('username')}%" )
+                ->limit('20')
+                ->get();
+        }else {
+            $users = User::select( 'name','email', 'avatar_url' )
+                ->limit('20')
+                ->get();
+        }
+
+        return response()->json($users);
     }
 
     public function update(Request $request, $id){
@@ -53,15 +45,6 @@ class UserController extends Controller
 
         $user->update();
         return $user;
-    }
-
-    public function login(Request $request){
-        $dados = $request->only('email', 'password');
-        $user = User::where('email', $dados['email'])
-            ->where('password', $dados['passowrd'])
-            ->first();
-//        $user->api_token =
-        return $user->api_token;
     }
 
 }

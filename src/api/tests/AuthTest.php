@@ -16,8 +16,8 @@ class AuthTest extends TestCase
     public function testRegister(){
         $dados = [
             'name' => 'Nome 01'.date('Ymdis').' '.rand(1,100),
-            'email' => 'maill@example.com',
-            'cpf' => '103.964.609-330',
+            'email' => 'mail'.rand(1,100).'@example.com',
+            'cpf' => rand(1,100).'103.964.609-2',
             'cep' => '81450-220',
             'number' => '123',
             'site' => 'test.com.br',
@@ -47,28 +47,4 @@ class AuthTest extends TestCase
 
     }
 
-//    public function testMe(){
-//
-//        $token = JWTAuth::fromUser('teste@example.com');
-//        dd($token);
-////        $token = \Tymon\JWTAuth\JWTAuth::fromUser('teste@example.com');
-////        $token = Tymon\JWTAuth\::fromUser('teste@example.com');
-////        dd($token);
-//        $this->get('/api/me', [
-//            'headers' => [
-//                'Authorization' => `Bearer ${token}`
-//            ]
-//        ]);
-//
-//
-//        $this->get('/api/me')->seeJsonContains('token');
-//
-////        dd($token);
-////        $response2 = (array) json_decode($this->response->content());
-////        $this->assertArrayHasKey('id', $response2);
-////        $this->assertArrayHasKey('name', $response2);
-////        $this->assertArrayHasKey('email', $response2);
-////        dd($response2);
-//
-//    }
 }
