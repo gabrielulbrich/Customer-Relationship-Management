@@ -12,14 +12,14 @@ class UserController extends Controller
         return User::find($id);
     }
 
-    public function getUsers(Request $request){
+    public function searchUsers(Request $request){
         if (!empty($request->input('username'))){
-            $users = User::select( 'name','email', 'avatar_url' )
-                ->where( "email", "LIKE", "%{$request->input('username')}%" )
+            $users = User::select( 'id','name','email', 'avatar_url' )
+                ->where( "name", "LIKE", "%{$request->input('username')}%" )
                 ->limit('20')
                 ->get();
         }else {
-            $users = User::select( 'name','email', 'avatar_url' )
+            $users = User::select( 'id','name','email', 'avatar_url' )
                 ->limit('20')
                 ->get();
         }

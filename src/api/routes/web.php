@@ -20,9 +20,12 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->get('refresh', 'AuthController@refresh');
     $router->get('logout', 'AuthController@logout');
 
-    $router->get('leads', 'LeadController@getAllLeads');
+    $router->get('users/search', 'UserController@searchUsers');
 
-    $router->get('users/search', 'UserController@getUsers');
+    $router->get('leads', 'LeadController@getAllLeads');
+    $router->put('/lead/status', 'LeadController@updateStatus');
+    $router->put('/lead/priority', 'LeadController@updatePriority');
+    $router->put('/lead/user', 'LeadController@updateUser');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

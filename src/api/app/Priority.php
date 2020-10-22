@@ -11,4 +11,6 @@ class Priority extends Model
     use Authenticatable, Authorizable;
 
     protected $table = "priorities";
+
+    protected $hidden = ['priority', 'id', 'icon'];
 }

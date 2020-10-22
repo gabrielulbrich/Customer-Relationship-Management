@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "eslint-loader": "^2.1.2",
-    "jest": "^26.4.2"
+    "jest": "^26.4.2",
+    "vuedraggable": "^2.24.2"
   },
   "devDependencies": {
     "@fullcalendar/core": "4.0.2",

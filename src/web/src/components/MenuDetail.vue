@@ -15,15 +15,15 @@
 							<AccordionTab header="Detalhes" :active="true">
 								<div class="p-field">
 									<label class="p-text-bold" for="status">Condição</label>
-									<InputText id="status" :disabled="true" :value="selectedLead.status.status" type="text" />
+									<Dropdown v-model="selectedLead.status" :options="conditionValues" optionLabel="name" placeholder="Select" @change="changeStatus($event, selectedLead)" />
 								</div>
 								<div class="p-field">
 									<label class="p-text-bold" for="priority">Prioridade</label>
-									<InputText id="priority" :disabled="true" :value="selectedLead.priority.priority" type="text" />
+									<Dropdown v-model="selectedLead.priority" :options="priorityValues" optionLabel="name" placeholder="Select" @change="changePriority($event, selectedLead)" />
 								</div>
 								<div class="p-field">
 									<label class="p-text-bold" for="assignee">Responsável</label>
-									<AutoComplete placeholder="Procurar" id="dd" :dropdown="true" :multiple="false" v-model="selectedUser" :suggestions="filteredUser" @complete="searchUser($event)" field="name"/>
+									<AutoComplete placeholder="Procurar" id="dd" :dropdown="true" :multiple="false" v-model="selectedLead.user" field="name" :suggestions="filteredUser" @complete="searchUser($event)" @item-select="changeUser($event, selectedLead)" />
 								</div>
 							</AccordionTab>
 							<AccordionTab header="Datas">
@@ -55,9 +55,7 @@
 								</div>
 							</AccordionTab>
 						</Accordion>
-						
 					</div>
-					<p>{{ selectedLead.telefone }}</p>
 				</div>
 			</div>
 		</div>
@@ -74,13 +72,21 @@
 			},
 			selectedLead: {
 				type: Object,
-			}
+			},
+			selectedUser: {
+				type: Object,
+			},
+			priorityValues: {
+				type: Array,
+			},
+			conditionValues: {
+				type: Array,
+			},
 		},
 		data() {
 			return {
 				d_active: this.active,
 				filteredUser: [],
-				selectedUser: [],
 				usersValue: [],
 			}
 		},
@@ -93,9 +99,6 @@
 			active() {
 				this.d_active = true;
 			},
-			selectedLead(){
-				console.log(this.selectedLead);
-			}
 		},
 		methods: {
 			hideConfigurator(event) {
@@ -117,8 +120,27 @@
 					.then((response) => {
 						this.usersValue = response.data;
 					})
-				}, 250);
-			}
+				}, 150);
+			},
+			changeStatus(event, lead){
+				api.put("/lead/status", {lead_id: lead.id, status_id: event.value.code})
+				.then((response) => {
+					this.$emit('update-user', response)
+				})
+			},
+			changePriority(event, lead){
+				api.put("/lead/priority", {lead_id: lead.id, priority_id: event.value.code})
+				.then((response) => {
+					this.$emit('update-user', response)
+				})
+			},
+			changeUser(event, lead){
+				console.log(event)
+				api.put("/lead/user", {lead_id: lead.id, user_id: event.value.id})
+				.then((response) => {
+					this.$emit('update-user', response)
+				})
+			},
 		},
 		computed: {
 			containerClass() {

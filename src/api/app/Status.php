@@ -11,4 +11,6 @@ class Status extends Model
     use Authenticatable, Authorizable;
 
     protected $table = "status";
+
+    protected $hidden = ['status', 'id'];
 }

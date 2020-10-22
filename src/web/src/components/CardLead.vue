@@ -14,10 +14,10 @@
             </div>
             <div class="issue-footer">
                 <span class="issue-avatar">
-                    <img :src="lead.user.avatar_url" alt="Assignee: Gabriel Ulbrich">
+                    <img :src="lead.avatar_url" alt="Assignee: Gabriel Ulbrich">
                 </span>
                 <span class="issue-priority">
-                    <img :src="lead.priority.icon">
+                    <img :src="lead.priority_icon">
                 </span>
             </div>
         </div>		

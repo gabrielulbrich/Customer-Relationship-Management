@@ -61,7 +61,7 @@
 			</div>
 		</div>
 
-		<MenuDetail :selectedLead="selectedLead" :active="active"/>
+		<MenuDetail :conditionValues="conditionValues" :priorityValues="priorityValues" :selectedUser="selectedUser" @update-user="updateUser" :selectedLead="selectedLead" :active="active"/>
 
 	</div>
 </template>
@@ -80,14 +80,18 @@ export default {
 		return{
 			active: false,
 			selectedLead: null,
+			selectedUser: null,
 			errors: [],
-			leads: null
+			leads: null,
+			priorityValues: [],
+			conditionValues: []
 		}
 	},
     methods: {
         toggleMenuDetail(lead) {
 			this.active = !this.active;
 			this.selectedLead = lead;
+			this.selectedUser = lead.user;
 		},
 		loadCards(){
 			this.leads = null;
@@ -95,12 +99,21 @@ export default {
 			api.get("/leads")
 			.then((response) => {
 				this.leads = response.data.leads;
+				this.priorityValues = response.data.priorities;
+				this.conditionValues = response.data.status;
 			})
 			.catch(error => {
 				console.log('error', error)
 				this.errors.push(error.response);
 			});
-		},		
+		},
+		updateUser(payload){
+			for (let lead of this.leads) {
+				if (payload.data.id == lead.id){
+					lead = Object.assign(lead, payload.data);
+				}
+			}
+		}
 	},
 	created(){
 		this.loadCards();

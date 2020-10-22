@@ -10,6 +10,7 @@
 			<div class="card">
 				<h5>Severities</h5>
 				<Button label="Primary" class="p-mr-2 p-mb-2"/>
+				<Button label="Primary" class="p-button-raised p-mr-2 p-mb-2" />
 				<Button label="Secondary" class="p-button-secondary p-mr-2 p-mb-2" />
 				<Button label="Success" class="p-button-success p-mr-2 p-mb-2" />
 				<Button label="Info" class="p-button-info p-mr-2 p-mb-2" />

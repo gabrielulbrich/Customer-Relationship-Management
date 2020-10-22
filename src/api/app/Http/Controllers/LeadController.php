@@ -6,10 +6,10 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Lead;
 use App\Priority;
-use App\Page;
-use Illuminate\Http\Request;
+use App\Status;
 use Illuminate\Support\Facades\Auth;
-//use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class LeadController extends Controller
 {
@@ -19,15 +19,128 @@ class LeadController extends Controller
 
         $page_user = $user->page()->first();
         $leadsFromUserPage = Lead::where('page_id', $page_user->id )->get();
+        $status = Status::all('id as code', 'status as name');
+        $priorities = Priority::all('id as code', 'priority as name');
+
         foreach($leadsFromUserPage as $lead){
             $lead->summary = $page_user->epic.' - '.$lead->name.' - '.$lead->id;
-            $lead->priority;
-            $lead->status;
-            $lead->user->name;
+            $lead->priority->code = $lead->priority->id;
+            $lead->priority->name = $lead->priority->priority;
+            $lead->priority_icon = $lead->priority->icon;
+            $lead->status->code = $lead->status->id;
+            $lead->status->name = $lead->status->status;
+            $lead->user;
+//            $lead->user->code = $lead->user->id;
+            $lead->avatar_url = $lead->user->avatar_url;
             $lead->created = $lead->created_at->format('d M');
         }
         return response()->json([
-            'leads' => $leadsFromUserPage
+            'leads' => $leadsFromUserPage,
+            'status' => $status,
+            'priorities' => $priorities
         ]);
+    }
+
+
+    /**
+     * Update Status do lead.
+     * todo: necessario criar validacao se o lead pertence a pagina do usuario.
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateStatus(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required|numeric',
+            'status_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        try{
+            $lead = Lead::find($request->input('lead_id'));
+            $lead->status_id = $request->input('status_id');
+            $lead->save();
+            $lead->status->code = $lead->status->id;
+            $lead->status->name = $lead->status->status;
+
+            return response()->json($lead);
+        } catch (\Exception $e) {
+            return response()->json( [
+                'errors' => [
+                    'message' => 'Erro ao atualizar lead.'
+                ],
+            ], 409);
+        }
+    }
+
+    /**
+     * Update Prioridade do lead.
+     * todo: necessario criar validacao se o lead pertence a pagina do usuario.
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePriority(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required|numeric',
+            'priority_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        try{
+            $lead = Lead::find($request->input('lead_id'));
+            $lead->priority_id = $request->input('priority_id');
+            $lead->save();
+            $lead->priority->code = $lead->priority->id;
+            $lead->priority->name = $lead->priority->priority;
+            $lead->priority_icon = $lead->priority->icon;
+
+
+            return response()->json($lead);
+        } catch (\Exception $e) {
+            return response()->json( [
+                'errors' => [
+                    'message' => 'Erro ao atualizar lead.'
+                ],
+            ], 409);
+        }
+    }
+
+    /**
+     * Update Usuario do lead.
+     * todo: necessario criar validacao se o lead pertence a pagina do usuario.
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateUser(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        try{
+            $lead = Lead::find($request->input('lead_id'));
+            $lead->user_id = $request->input('user_id');
+            $lead->save();
+            $lead->user;
+            $lead->avatar_url = $lead->user->avatar_url;
+
+
+            return response()->json($lead);
+        } catch (\Exception $e) {
+            return response()->json( [
+                'errors' => [
+                    'message' => 'Erro ao atualizar lead.'
+                ],
+            ], 409);
+        }
     }
 }
