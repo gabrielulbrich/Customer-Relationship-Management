@@ -73,9 +73,6 @@
 			selectedLead: {
 				type: Object,
 			},
-			selectedUser: {
-				type: Object,
-			},
 			priorityValues: {
 				type: Array,
 			},

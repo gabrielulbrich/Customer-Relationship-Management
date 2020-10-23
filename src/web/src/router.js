@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from "@/store";
 import Board from './views/Crm/Board/Board.vue';
+import Lead from './views/Crm/Lead/Lead.vue';
 
 Vue.use(Router);
 
@@ -33,8 +34,13 @@ const router = new Router({
 			children: [
 				{
 					path: 'board',
-					component: Board
+					component: Board,
 				},
+				{
+					path: 'lead',
+					component: Lead,
+					name: 'lead'
+				}
 			]
 		},
 	],

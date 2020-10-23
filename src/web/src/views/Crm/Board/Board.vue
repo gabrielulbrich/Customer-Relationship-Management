@@ -61,7 +61,7 @@
 			</div>
 		</div>
 
-		<MenuDetail :conditionValues="conditionValues" :priorityValues="priorityValues" :selectedUser="selectedUser" @update-user="updateUser" :selectedLead="selectedLead" :active="active"/>
+		<MenuDetail :conditionValues="conditionValues" :priorityValues="priorityValues" @update-user="updateUser" :selectedLead="selectedLead" :active="active"/>
 
 	</div>
 </template>
@@ -80,7 +80,6 @@ export default {
 		return{
 			active: false,
 			selectedLead: null,
-			selectedUser: null,
 			errors: [],
 			leads: null,
 			priorityValues: [],
@@ -91,7 +90,6 @@ export default {
         toggleMenuDetail(lead) {
 			this.active = !this.active;
 			this.selectedLead = lead;
-			this.selectedUser = lead.user;
 		},
 		loadCards(){
 			this.leads = null;
