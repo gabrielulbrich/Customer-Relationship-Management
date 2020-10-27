@@ -23,9 +23,10 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->get('users/search', 'UserController@searchUsers');
 
     $router->get('leads', 'LeadController@getAllLeads');
-    $router->put('/lead/status', 'LeadController@updateStatus');
-    $router->put('/lead/priority', 'LeadController@updatePriority');
-    $router->put('/lead/user', 'LeadController@updateUser');
+    $router->get('lead/{leadId}', 'LeadController@getLeadById');
+    $router->put('lead/status', 'LeadController@updateStatus');
+    $router->put('lead/priority', 'LeadController@updatePriority');
+    $router->put('lead/user', 'LeadController@updateUser');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

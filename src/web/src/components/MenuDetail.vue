@@ -112,7 +112,6 @@
 							return user.name.toLowerCase().startsWith(event.query.toLowerCase());
 						});
 					}
-					console.log(this.usersValue, this.filteredUser)
 					api.get("/users/search?username="+event.query)
 					.then((response) => {
 						this.usersValue = response.data;
@@ -132,7 +131,6 @@
 				})
 			},
 			changeUser(event, lead){
-				console.log(event)
 				api.put("/lead/user", {lead_id: lead.id, user_id: event.value.id})
 				.then((response) => {
 					this.$emit('update-user', response)

@@ -41,6 +41,34 @@ class LeadController extends Controller
         ]);
     }
 
+    public function getLeadById($leadId){
+        $user = User::find(Auth::id());
+
+        $page_user = $user->page()->first();
+        $leadById = Lead::where('page_id', $page_user->id )
+                                ->where('id', $leadId)
+                                ->get()
+                                ->first();
+        $status = Status::all('id as code', 'status as name');
+        $priorities = Priority::all('id as code', 'priority as name', 'icon');
+
+        $leadById->summary = $page_user->epic.' - '.$leadById->name.' - '.$leadById->id;
+        $leadById->priority->code = $leadById->priority->id;
+        $leadById->priority->name = $leadById->priority->priority;
+        $leadById->priority_icon = $leadById->priority->icon;
+        $leadById->status->code = $leadById->status->id;
+        $leadById->status->name = $leadById->status->status;
+        $leadById->user;
+        $leadById->avatar_url = $leadById->user->avatar_url;
+        $leadById->created = $leadById->created_at->format('d M');
+
+        return response()->json([
+            'lead' => $leadById,
+            'status' => $status,
+            'priorities' => $priorities
+        ]);
+    }
+
 
     /**
      * Update Status do lead.

@@ -37,7 +37,7 @@ const router = new Router({
 					component: Board,
 				},
 				{
-					path: 'lead',
+					path: 'lead/:id',
 					component: Lead,
 					name: 'lead'
 				}

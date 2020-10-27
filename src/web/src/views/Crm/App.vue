@@ -39,7 +39,7 @@ export default {
             mobileMenuActive: false,
             menu : [
                 {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'+this.$store.getters.pageName },
-                {label: 'Board', icon: 'pi pi-fw pi-table', to: this.$store.getters.pageName+'/board'},
+                {label: 'Board', icon: 'pi pi-fw pi-table', to: '/'+this.$store.getters.pageName+'/board'},
                 {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/chart'},
                 {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://www.primefaces.org/sigma-vue/#/"}}
             ]
