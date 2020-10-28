@@ -1,16 +1,16 @@
 <template>
-	<div>
-		<div class="messages" style="margin-top: 25px;">
+	<div v-if="histories && histories.length">
+		<div v-for="(history, index) in histories" :key="index" class="messages">
 			<div class="messages-image">
-				<img src="https://issues.redhat.com/secure/projectavatar?pid=12318028&avatarId=25966" alt="Logo">
+				<img :src="history.avatar_url" alt="Logo">
 			</div>
 			<div class="messages-card" style="">
-				<div class="p-col">
+				<div>
 					<div class="messages-name">
-						<p><span>Gabriel Ulbrich</span> • 10 Out 2020</p>
+						<p><span>{{ history.user.name }}</span> • {{ history.created }}</p>
 					</div>
 					<div class="messages-text">
-						<span>Esta e uma mensagem</span>
+						<span>{{ history.comment }}</span>
 					</div>
 				</div>
 			</div>
@@ -19,17 +19,21 @@
 </template>
 
 <script>
-	import { api } from "@/services.js";
 	export default {
 		props: {
-			history: {
-				type: Object,
+			histories: {
+				type: Array,
 			},
 		},
 		data() {
 			return {
 
 			}
+		},
+		watch: {
+			histories() {
+				console.log('KKDWAKKDWAKTESTE HIGSOTRI')
+			},
 		},
 		watch: {
 
@@ -46,11 +50,11 @@
 <style lang="scss" scoped>
 	.messages {
 		&-image{
-			display: inline-block;
 			img{
 				height: 35px;
 				width: 35px;
 				display: block;
+				position: absolute;
 			}
 		}
 		&-name{
@@ -61,12 +65,12 @@
 		}
 		&-card{
 			background-color: #ffffff;
-			padding: 0.2em 1em 0.2em 1em;
+			padding: 10px 10px 10px 15px;
 			margin-bottom: 16px;
 			border-radius: 3px;
-			position: absolute;
+			position: relative;
 			display: inline-block;
-			margin-left: 10px;
+			margin-left: 40px;
 		}
 	}
 </style>

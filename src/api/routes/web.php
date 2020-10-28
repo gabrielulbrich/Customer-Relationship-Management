@@ -27,6 +27,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->put('lead/status', 'LeadController@updateStatus');
     $router->put('lead/priority', 'LeadController@updatePriority');
     $router->put('lead/user', 'LeadController@updateUser');
+    $router->post('lead/comment', 'LeadController@submitCommentLead');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

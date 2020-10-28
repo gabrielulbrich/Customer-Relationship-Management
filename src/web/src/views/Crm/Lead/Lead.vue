@@ -52,13 +52,17 @@
 							</li>
 						</ul>
 					</div>
-					<div class="p-col-12 history">
+					<div class="p-col-12 comment">
 						<div>
 							<label for="note">Observação Interna</label>
-							<Textarea id="note" placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
+							<Textarea id="note" v-model="comment" placeholder="Your Message" :autoResize="true" rows="3" cols="30" />
+							<Button label="Comentar" @click="submitComment" class="p-mr-2 p-mb-2" style="float:right"></Button>
 						</div>
-						<History/>
 					</div>
+					<div class="p-col-12 history">
+						<History :histories="lead.histories" />
+					</div>
+					
 				</div>
 			</div>
 			<div class="p-col-4" style=" height: 1000px; background: beige; display: none">
@@ -85,6 +89,7 @@ export default {
 			filteredUser: [],
 			usersValue: [],
 			errors: [],
+			comment: null,
 		}
 	},
 	watch: {
@@ -138,6 +143,13 @@ export default {
 				this.lead = Object.assign(this.lead, response.data);
 			})
 		},
+		submitComment(){
+			api.post("/lead/comment", {lead_id: this.lead.id, user_id: this.$store.state.user.id, comment: this.comment})
+			.then((response) => {
+				this.lead.histories.unshift(response.data);
+				console.log(this.lead.histories);
+			})
+		}
 	},
 	created(){
 		this.loadLead();
@@ -204,7 +216,7 @@ export default {
 	}
 }
 
-.history{
+.comment{
 	margin-top: 25px;
 	.p-inputtextarea{
 		width: 100%;

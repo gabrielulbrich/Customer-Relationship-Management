@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\History;
 use App\User;
 use App\Lead;
 use App\Priority;
@@ -26,7 +27,7 @@ class LeadController extends Controller
             $lead->summary = $page_user->epic.' - '.$lead->name.' - '.$lead->id;
             $lead->priority->code = $lead->priority->id;
             $lead->priority->name = $lead->priority->priority;
-            $lead->priority_icon = $lead->priority->icon;
+            $lead->priority_icon = $lead->priority->icon_url;
             $lead->status->code = $lead->status->id;
             $lead->status->name = $lead->status->status;
             $lead->user;
@@ -50,23 +51,60 @@ class LeadController extends Controller
                                 ->get()
                                 ->first();
         $status = Status::all('id as code', 'status as name');
-        $priorities = Priority::all('id as code', 'priority as name', 'icon');
+        $priorities = Priority::all('id as code', 'priority as name', 'icon_url');
 
         $leadById->summary = $page_user->epic.' - '.$leadById->name.' - '.$leadById->id;
         $leadById->priority->code = $leadById->priority->id;
         $leadById->priority->name = $leadById->priority->priority;
-        $leadById->priority_icon = $leadById->priority->icon;
+        $leadById->priority_icon = $leadById->priority->icon_url;
         $leadById->status->code = $leadById->status->id;
         $leadById->status->name = $leadById->status->status;
         $leadById->user;
         $leadById->avatar_url = $leadById->user->avatar_url;
         $leadById->created = $leadById->created_at->format('d M');
+        $leadById->histories;
+        foreach ($leadById->histories as $history){
+            $history->user = User::find($history->user_id);
+            $history->created = $history->created_at->format('d M Y');
+            $history->avatar_url = $history->user->avatar_url;
+        }
 
         return response()->json([
             'lead' => $leadById,
             'status' => $status,
-            'priorities' => $priorities
+            'priorities' => $priorities,
         ]);
+    }
+
+    public function submitCommentLead(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required|numeric',
+            'user_id' => 'required|numeric',
+            'comment' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        try{
+            $history = new History;
+            $history->user_id = $request->input('user_id');
+            $history->comment = $request->input('comment');
+            $history->save();
+            $history->lead()->attach([$request->input('lead_id')]);
+            $history->user = User::find(Auth::id());
+            $history->created = $history->created_at->format('d M Y');
+            $history->avatar_url = $history->user->avatar_url;
+
+            return response()->json($history, 201);
+        } catch (\Exception $e) {
+            return response()->json( [
+                'errors' => [
+                    'message' => 'Erro ao salvar comentário.'
+                ],
+            ], 409);
+        }
     }
 
 
@@ -125,7 +163,7 @@ class LeadController extends Controller
             $lead->save();
             $lead->priority->code = $lead->priority->id;
             $lead->priority->name = $lead->priority->priority;
-            $lead->priority_icon = $lead->priority->icon;
+            $lead->priority_icon = $lead->priority->icon_url;
 
 
             return response()->json($lead);

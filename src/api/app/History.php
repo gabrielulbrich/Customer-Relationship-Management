@@ -6,7 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class Lead extends Model
+class History extends Model
 {
     use Authenticatable, Authorizable;
 
@@ -28,23 +28,9 @@ class Lead extends Model
 //        'token', 'refer', 'pivot'
 //    ];
 
-    public function priority()
-    {
-        return $this->belongsTo('App\Priority');
-    }
 
-    public function status()
-    {
-        return $this->belongsTo('App\Status');
-    }
-
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
-
-    public function histories(){
-        return $this->belongsToMany('App\History','leads_history')->orderBy('created_at', 'desc');
+    public function lead(){
+        return $this->belongsToMany('App\Lead','leads_history');
     }
 
 }

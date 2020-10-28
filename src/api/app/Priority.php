@@ -12,5 +12,5 @@ class Priority extends Model
 
     protected $table = "priorities";
 
-    protected $hidden = ['priority', 'id', 'icon'];
+    protected $hidden = ['priority', 'id', 'icon_url'];
 }
