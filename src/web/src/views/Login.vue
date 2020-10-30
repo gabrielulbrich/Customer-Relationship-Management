@@ -5,17 +5,15 @@
         <div class="card p-fluid">
             <div>
                 <h5 class="h2">Entrar</h5>
-                <div v-if="errors.length && errors[0].email" class="p-field">
-                    <InputText id="email" type="email" placeholder="informe seu e-mail" v-model="login.email" class="p-error" aria-describedby="username-help"/>
-                    <small id="username-help" class="p-error">Digite um e-mail valido.</small>
-                </div>
-                <div v-else class="p-field">
-                    <InputText id="email" type="email" placeholder="informe seu e-mail" v-model="login.email"/>
+                <div class="p-field">
+                    <InputText id="email" type="email" placeholder="informe seu e-mail" v-model="login.email" :class="{'p-invalid': errors.length && errors[0].email}" aria-describedby="username-help"/>
+                    <small class="p-invalid" v-if="errors.length && errors[0].email">{{ errors[0].email[0] }}</small>
                 </div>
                 <div class="p-field">
-                    <InputText id="password" type="password" placeholder="informe sua senha" v-model="login.password" />
+                    <InputText id="password" type="password" placeholder="informe sua senha" :class="{'p-invalid': errors.length && errors[0].password}" v-model="login.password" />
+                    <small class="p-invalid" v-if="errors.length && errors[0].password">{{ errors[0].password[0] }}</small>
+                    <small class="p-invalid" v-else-if="errors.length && errors[0].error">{{ errors[0].error.auth }}</small>
                 </div>
-                <small v-if="errors.length && errors[0].auth" id="username-help" class="p-error">E-mail ou senha incorretos.</small>
                 <Button label="Login" class="p-mr-2 p-mb-2" @click.prevent="loginUser" />
                 <div class="p-d-flex p-jc-between p-mt-3">
                     <Button label="esqueci minha senha" class="p-button-secondary p-button-text p-text-left" />
@@ -53,7 +51,7 @@ export default {
         await this.redirectToDashBoard();
       } catch (error) {
         this.errors = [];
-        this.errors.push(error.response.data.error);
+        this.errors.push(error.response.data);
       }
     }
   },

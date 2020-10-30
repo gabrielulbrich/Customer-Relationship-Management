@@ -12,6 +12,16 @@ use  App\User;
 
 class AuthController extends Controller
 {
+
+    private $messages = [
+        'required' => 'O campo :attribute é obrigatório.',
+        'min' => 'A quantidade mínima de caracteres é :min',
+        'email' => 'Digite um e-mail válido',
+        'unique' => ':attribute já cadastrado',
+        'confirmed' => 'As senhas não coincidem',
+        'password' => 'Senha atual errada.',
+    ];
+
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login','register']]);
@@ -25,33 +35,26 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $dataValidation = [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-            'cpf' => 'required|string',
-            'cep' => 'required|string',
-            'number' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
+            'email' => 'required|unique:users|email:rfc,dns',
+            'cpf' => 'required|string|unique:users',
+            'site' => 'required|string',
+            'password' => 'required|confirmed|max:255|min:6'
+        ];
+        $this->validate($request, $dataValidation, $this->messages);
 
         try {
             $user = new User;
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->cpf = $request->input('cpf');
-            $user->cep = $request->input('cep');
-            $user->number = $request->input('number');
-            $user->complement = $request->input('complement');
-            $plainPassword = $request->input('password');
-            $user->password = app('hash')->make($plainPassword);
+            $user->avatar_url = "/assets/user_icons/user.png";
+            $user->password = app('hash')->make($request->input('password'));
             $user->save();
 
             //return successful response
-            return response()->json(['user' => $user, 'created' => 'true'], 201);
+            return response()->json($user, 201);
 
         } catch (\Exception $e) {
             //return error message
@@ -72,14 +75,11 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
+        $dataValidation = [
+            'email' => 'required|email:rfc,dns',
             'password' => 'required|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
+        ];
+        $this->validate($request, $dataValidation, $this->messages);
 
         $credentials = $request->only(['email', 'password']);
 
@@ -87,8 +87,9 @@ class AuthController extends Controller
             return response()->json(['error' => [ 'auth' => 'E-mail ou senha incorretos']], 401);
         }
         $user = User::find(Auth::id());
+        $user->avatar = $user->avatar_url;
         return response()->json([
-            'user'      => $user->first(),
+            'user'      => $user,
             'page'      => $user->page->first(),
             'profile'   => $user->profile->first(),
             'token'     => $this->respondWithToken($token)

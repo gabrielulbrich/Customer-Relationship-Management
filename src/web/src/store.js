@@ -11,6 +11,7 @@ const store = new Vuex.Store({
       id: "",
       name: "",
       email: "",
+      avatar: "",
       profile: {
         id: "",
         profile: "",
@@ -55,7 +56,7 @@ const store = new Vuex.Store({
         context.commit("UPDATE_LOGIN", true);
       })
     },
-    getUser(context) {
+    me(context) {
       return api.get(`/me`)
       .then(response => {
         context.commit("UPDATE_USER", response.data.user);
@@ -68,6 +69,12 @@ const store = new Vuex.Store({
       return api.post(`/register`, payload)
       .then(response => {
         context.commit("UPDATE_USER", response)
+      })
+    },
+    updateUser(context, payload){
+      return api.put(`/user/update`, payload)
+      .then(response => {
+        context.commit("UPDATE_USER", response.data)
       })
     },
     refreshToken(context){

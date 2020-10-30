@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import store from "@/store";
 import Board from './views/Crm/Board/Board.vue';
 import Lead from './views/Crm/Lead/Lead.vue';
+import Profile from './views/Crm/Profile/Profile.vue';
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ const router = new Router({
 					path: 'lead/:id',
 					component: Lead,
 					name: 'lead'
+				},
+				{
+					path: 'profile',
+					component: Profile,
+					name: 'profile'
 				}
 			]
 		},

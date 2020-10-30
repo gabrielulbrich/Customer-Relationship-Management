@@ -21,6 +21,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->get('logout', 'AuthController@logout');
 
     $router->get('users/search', 'UserController@searchUsers');
+    $router->put('user/update', 'UserController@update');
 
     $router->get('leads', 'LeadController@getAllLeads');
     $router->get('lead/{leadId}', 'LeadController@getLeadById');
