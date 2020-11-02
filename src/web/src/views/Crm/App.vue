@@ -38,10 +38,11 @@ export default {
             overlayMenuActive: false,
             mobileMenuActive: false,
             menu : [
-                {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: '/'+this.$store.getters.pageName },
-                {label: 'Board', icon: 'pi pi-fw pi-table', to: '/'+this.$store.getters.pageName+'/board'},
-                {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: '/chart'},
-                {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://www.primefaces.org/sigma-vue/#/"}}
+                {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/') },
+                {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board') },
+                {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: this.pageUrl('/chart') },
+                {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin()} },
+                {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://www.primefaces.org/sigma-vue/#/"}},
             ]
         }
     },
@@ -52,6 +53,12 @@ export default {
         }
     },
     methods: {
+        pageUrl(to) {
+            return '/'+this.$store.getters.pageName+to
+        },
+        isAdmin(){
+            return this.$store.getters.isAdmin;
+        },
         onWrapperClick() {
             if (!this.menuClick) {
                 this.overlayMenuActive = false;

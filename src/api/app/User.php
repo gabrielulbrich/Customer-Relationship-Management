@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password', 'pivot', 'cpf', 'cep', 'number', 'complement', 'updated_at', 'created_at', 'avatar_url', 'page', 'profile'
+        'password', 'pivot', 'cpf', 'cep', 'number', 'complement', 'updated_at', 'created_at', 'avatar_url', 'page'
     ];
 
     /**
@@ -56,7 +56,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsToMany('App\Page','users_pages');
     }
 
+    public function users(){
+        return $this->belongsToMany('App\User','users_pages', 'page_id');
+    }
+
+    public function user(){
+        return $this->belongsToMany('App\User','users_pages');
+    }
+
     public function profile(){
-        return $this->belongsToMany('App\Profile','users_pages');
+        return $this->belongsToMany('App\Profile','users_pages')->select('id as code', 'profile as name')->withPivot('page_id');
     }
 }

@@ -13,8 +13,8 @@ const store = new Vuex.Store({
       email: "",
       avatar: "",
       profile: {
-        id: "",
-        profile: "",
+        code: "",
+        name: "",
       },
     },
     page: {
@@ -26,6 +26,9 @@ const store = new Vuex.Store({
   getters: {
     pageName: state => {
       return state.page.site.split('.')[0]
+    },
+    isAdmin: state => {
+      return state.user.profile.name == 'Administrador'
     }
   },
   mutations: {
@@ -52,7 +55,7 @@ const store = new Vuex.Store({
         window.localStorage.token = `Bearer ${response.data.token.original.token}`;
         context.commit("UPDATE_USER", response.data.user);
         context.commit("UPDATE_PAGE", response.data.page);
-        context.commit("UPDATE_PROFILE", response.data.profile);
+        context.commit("UPDATE_PROFILE", response.data.user.profile);
         context.commit("UPDATE_LOGIN", true);
       })
     },
@@ -64,12 +67,6 @@ const store = new Vuex.Store({
         context.commit("UPDATE_PROFILE", response.data.profile);
         context.commit("UPDATE_LOGIN", true);
       });
-    },
-    registerUser(context, payload){
-      return api.post(`/register`, payload)
-      .then(response => {
-        context.commit("UPDATE_USER", response)
-      })
     },
     updateUser(context, payload){
       return api.put(`/user/update`, payload)

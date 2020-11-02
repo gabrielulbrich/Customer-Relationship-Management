@@ -17,9 +17,6 @@
                 <Button label="Login" class="p-mr-2 p-mb-2" @click.prevent="loginUser" />
                 <div class="p-d-flex p-jc-between p-mt-3">
                     <Button label="esqueci minha senha" class="p-button-secondary p-button-text p-text-left" />
-                    <router-link to="/registrar" style="width: 430px;">
-                        <Button label="ainda não tenho uma conta" class="p-button-secondary p-button-text p-text-right" />
-                    </router-link>
                 </div>
             </div>
         </div>

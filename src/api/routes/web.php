@@ -22,6 +22,10 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
 
     $router->get('users/search', 'UserController@searchUsers');
     $router->put('user/update', 'UserController@update');
+    $router->put('user/update-profile', 'UserController@updateProfile'); //ONLY ADMIN
+    $router->delete('user/delete', 'UserController@delete'); //ONLY ADMIN
+    $router->post('user/register', 'UserController@store'); //ONLY ADMIN
+    $router->get('users', 'UserController@allUsersFromPage'); //ONLY ADMIN
 
     $router->get('leads', 'LeadController@getAllLeads');
     $router->get('lead/{leadId}', 'LeadController@getLeadById');
@@ -32,7 +36,6 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->post('register', 'AuthController@register');
     $router->post('login', 'AuthController@login');
 
 //    $router->post('/api/login', 'UserController@login');

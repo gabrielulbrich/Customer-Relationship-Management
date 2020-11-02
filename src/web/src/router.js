@@ -4,6 +4,7 @@ import store from "@/store";
 import Board from './views/Crm/Board/Board.vue';
 import Lead from './views/Crm/Lead/Lead.vue';
 import Profile from './views/Crm/Profile/Profile.vue';
+import Users from './views/Crm/Users/Users.vue';
 
 Vue.use(Router);
 
@@ -19,11 +20,6 @@ const router = new Router({
 			path: '/login',
 			name: 'Login',
 			component: () => import('./views/Login.vue')
-		},
-		{
-			path: '/registrar',
-			name: 'Register User',
-			component: () => import('./views/Register.vue')
 		},
 		{
 			path: '/:page',
@@ -46,7 +42,15 @@ const router = new Router({
 					path: 'profile',
 					component: Profile,
 					name: 'profile'
-				}
+				},
+				{
+					path: 'users',
+					component: Users,
+					name: 'users',
+					meta: {
+						requiresAdmin: true
+					}
+				},
 			]
 		},
 	],
@@ -64,6 +68,9 @@ router.beforeEach((to, from, next) => {
 				name: 'Login',
 			})
 		}
+	} else if(to.matched.some(record => record.meta.requiresAdmin)) {
+		console.log('testeeeeeeeeeeee');
+		next();
 	} else {
 		next();
 	}

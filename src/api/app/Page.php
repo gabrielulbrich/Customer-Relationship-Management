@@ -27,5 +27,9 @@ class Page extends Model
     protected $hidden = [
         'token', 'refer', 'pivot'
     ];
-    
+
+
+    public function users(){
+        return $this->belongsToMany('App\User','users_pages');
+    }
 }

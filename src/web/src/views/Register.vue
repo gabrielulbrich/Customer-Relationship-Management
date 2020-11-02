@@ -5,18 +5,13 @@
                 <div>
                     <h5>Cadastre-se</h5>
                     <p>Preencha as informações abaixo para criar sua conta:</p>
-                    <div class="p-field">
+                    <!-- <div class="p-field">
                         <InputText id="name" placeholder="nome" type="text" :class="{'p-invalid': errors.length && errors[0].name}" aria-describedby="name-help" v-model="register.name" />
                         <small class="p-invalid" v-if="errors.length && errors[0].name">{{errors[0].name[0]}}</small>
                     </div>
                     <div class="p-field">
                         <InputText id="cpf" placeholder="cpf" type="text"  :class="{'p-invalid': errors.length && errors[0].cpf}" aria-describedby="cpf-help" v-model="register.cpf"/>
                         <small class="p-invalid" v-if="errors.length && errors[0].cpf">{{errors[0].cpf[0]}}</small>
-                    </div>
-                    <p>Site da loja:</p>
-                    <div class="p-field">
-                        <InputText id="site" placeholder="meusite.com.br" type="text" :class="{'p-invalid': errors.length && errors[0].site}" aria-describedby="site-help" v-model="register.site" />
-                        <small class="p-invalid" v-if="errors.length && errors[0].site">{{errors[0].site[0]}}</small>
                     </div>
                     <p>Informações de acesso:</p>
                     <div class="p-field">
@@ -35,7 +30,7 @@
                         <router-link to="/login">
                         <Button label="voltar para área de login" class="p-button-secondary p-button-text" />
                         </router-link>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
