@@ -28,6 +28,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->get('users', 'UserController@allUsersFromPage'); //ONLY ADMIN
 
     $router->get('leads', 'LeadController@getAllLeads');
+    $router->get('lead/report', 'LeadController@report');
     $router->get('lead/{leadId}', 'LeadController@getLeadById');
     $router->put('lead/status', 'LeadController@updateStatus');
     $router->put('lead/priority', 'LeadController@updatePriority');

@@ -38,7 +38,7 @@ export default {
             overlayMenuActive: false,
             mobileMenuActive: false,
             menu : [
-                {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/') },
+                {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
                 {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board') },
                 {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: this.pageUrl('/chart') },
                 {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin()} },

@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from "@/store";
-import Board from './views/Crm/Board/Board.vue';
-import Lead from './views/Crm/Lead/Lead.vue';
-import Profile from './views/Crm/Profile/Profile.vue';
-import Users from './views/Crm/Users/Users.vue';
+import Dashboard from '@/views/Crm/Dashboard/Dashboard.vue';
+import Board from '@/views/Crm/Board/Board.vue';
+import Lead from '@/views/Crm/Lead/Lead.vue';
+import Profile from '@/views/Crm/Profile/Profile.vue';
+import Users from '@/views/Crm/Users/Users.vue';
 
 Vue.use(Router);
 
@@ -28,10 +29,17 @@ const router = new Router({
 				requiresAuth: true
 			},
 			component: () => import('./views/Crm/App.vue'),
+			redirect: { name: 'dashboard' },
 			children: [
+				{
+					path: 'dashboard',
+					component: Dashboard,
+					name: 'dashboard'
+				},
 				{
 					path: 'board',
 					component: Board,
+					name: 'board'
 				},
 				{
 					path: 'lead/:id',

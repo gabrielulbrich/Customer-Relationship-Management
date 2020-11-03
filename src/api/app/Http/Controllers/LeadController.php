@@ -209,4 +209,36 @@ class LeadController extends Controller
             ], 409);
         }
     }
+
+    public function report(){
+        $oneWeekAgo = \Carbon\Carbon::today()->subWeek();
+        $user = User::find(Auth::id());
+
+        $page_user = $user->page()->first();
+
+        $allLeads = Lead::where('page_id', $page_user->id)->count();
+        $last7days = Lead::where('page_id', $page_user->id)->whereDate('created_at','>=',$oneWeekAgo)->count();
+        $newLeads = Lead::where('page_id', $page_user->id)->where('status_id', 1)->count();
+        $closedLeads = Lead::where('page_id', $page_user->id)->where('status_id', 4)->count();
+
+        $activity = Lead::where('page_id', $page_user->id)->where('user_id', Auth::id())->select('id', 'name', 'priority_id')->get();
+        foreach($activity as $ac) {
+            $ac->summary = $page_user->epic . ' - ' . $ac->name . ' - ' . $ac->id;
+            $ac->priority;
+            $ac->priority->code = $ac->priority->id;
+            $ac->priority->name = $ac->priority->priority;
+            $ac->priority_icon = $ac->priority->icon_url;
+        }
+
+
+        return response()->json([
+            'report' => [
+                'last7days' => $last7days,
+                'allLeads' => $allLeads,
+                'newLeads' => $newLeads,
+                'closedLeads' => $closedLeads,
+            ],
+            'activity' => $activity
+        ]);
+    }
 }
