@@ -1,7 +1,6 @@
 <template>
 		<div class="p-grid p-mt-6 p-jc-center">
-			<div class="p-col-fixed"  style="width:450px;">
-        
+			<div v-if="!forgot" class="p-col-fixed"  style="width:450px;">
         <div class="card p-fluid">
             <div>
                 <h5 class="h2">Entrar</h5>
@@ -15,8 +14,23 @@
                     <small class="p-invalid" v-else-if="errors.length && errors[0].error">{{ errors[0].error.auth }}</small>
                 </div>
                 <Button label="Login" class="p-mr-2 p-mb-2" @click.prevent="loginUser" />
-                <div class="p-d-flex p-jc-between p-mt-3">
-                    <Button label="esqueci minha senha" class="p-button-secondary p-button-text p-text-left" />
+                <div class="p-d-flex p-mt-3">
+                    <Button label="esqueci minha senha" class="p-button-secondary p-button-text p-text-left" @click="forgot = true" />
+                </div>
+            </div>
+        </div>
+			</div>
+      <div v-else class="p-col-fixed"  style="width:450px;">
+        <div class="card p-fluid">
+            <div>
+                <h5 class="h2">Recuperar senha</h5>
+                <div class="p-field">
+                    <InputText id="email" type="email" placeholder="informe seu e-mail" v-model="login.email" :class="{'p-invalid': errors.length && errors[0].email}" aria-describedby="username-help"/>
+                    <small class="p-invalid" v-if="errors.length && errors[0].email">{{ errors[0].email[0] }}</small>
+                </div>
+                <Button label="Trocar senha" class="p-mr-2 p-mb-2" @click.prevent="loginUser" />
+                <div class="p-d-flex p-mt-3">
+                    <Button label="voltar" class="p-button-secondary p-button-text p-text-left" @click="forgot = false" />
                 </div>
             </div>
         </div>
@@ -34,7 +48,7 @@ export default {
         email: "",
         password: ""
       },
-      criar: false,
+      forgot: false,
       errors: []
     };
   },
