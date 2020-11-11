@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="p-grid nested-grid">
-			<div class="p-col-8">
+			<div class="p-col">
 				<div class="p-grid">
 					<div class="p-col-12 details">
 						<div>
@@ -65,9 +65,36 @@
 					
 				</div>
 			</div>
-			<div class="p-col-4" style=" height: 1000px; background: beige; display: none">
-				<p>KEYWORDS DO lead</p>
-				<p>OUTROS LEADS DA PESSOA COM ESSE EMAIL</p>
+			<div class="p-col-4" style="min-width: 350px">
+				<Carousel v-if="anotherLeads && anotherLeads.length" :value="anotherLeads" :numVisible="1" :numScroll="1" :circular="true" style="background: #FFF;">
+					<template #header>
+						<h2 class="title">Histórico</h2>
+					</template>
+					<template #item="slotProps">
+						<div class="car-item">
+							<div class="car-content">
+								<div>
+									<router-link class="lead-page" :to="{name: 'lead', params: {id: slotProps.data.id}}">
+										<span>{{slotProps.data.summary}}</span>
+									</router-link>
+									<div class="p-d-flex p-jc-between value" style="margin-top: 10px">
+										<div :class="{
+											'p-tag p-tag-rounded p-tag-info': slotProps.data.status.code != 4,
+											'p-tag p-tag-rounded p-tag-success': slotProps.data.status.code == 4,
+										}">
+											{{slotProps.data.status.name}}
+										</div>
+										<img :src=slotProps.data.priority_icon alt="Icon Image Prioridade">
+										<div>
+											<img :src="slotProps.data.user.avatar" alt="Icon Image Avatar">
+											{{ lead.user.name }}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</template>
+				</Carousel>
 			</div>	
 		</div>
 	</div>
@@ -84,6 +111,7 @@ export default {
 	data(){
 		return{
 			lead: {},
+			anotherLeads: [],
 			priorityValues: [],
 			conditionValues: [],
 			filteredUser: [],
@@ -93,7 +121,9 @@ export default {
 		}
 	},
 	watch: {
-
+		$route() {
+			this.loadLead();
+		},
 	},
     methods: {
 		loadLead() {
@@ -101,6 +131,7 @@ export default {
 			api.get(`/lead/${this.$route.params.id}`)
 			.then((response) => {
 				this.lead = response.data.lead;
+				this.anotherLeads = response.data.another_leads
 				this.priorityValues = response.data.priorities;
 				this.conditionValues = response.data.status;
 			})
@@ -179,6 +210,21 @@ export default {
 	}
 }
 
+.value{
+	img{
+		width: 15px;
+		height: 15px;
+	}
+}
+
+.title {
+	text-align: center;
+	font-weight: 600;
+    font-size: 18px;
+    margin: 5px 0px 20px 0px;
+    text-transform: uppercase;
+}
+
 .details{
 	// margin-top: 10px;
 	.p-dropdown{
@@ -199,10 +245,6 @@ export default {
 		padding: 0;
 		margin: 0;
 		position: relative;
-		img{
-			width: 15px;
-			height: 15px;
-		}
 
 		.name{
 			color: #787575;

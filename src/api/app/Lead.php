@@ -24,9 +24,9 @@ class Lead extends Model
 //     *
 //     * @var array
 //     */
-//    protected $hidden = [
-//        'token', 'refer', 'pivot'
-//    ];
+    protected $hidden = [
+        'priority_id', 'status_id', 'user_id'
+    ];
 
     public function priority()
     {

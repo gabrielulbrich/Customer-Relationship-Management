@@ -19,7 +19,7 @@
 				<div class="swimlane">
 					<div v-if="leads && leads.length" class="leads" key="leads">
 						<div class="lead" v-for="(lead, index) in leads" :key="index">
-							<div v-if="lead.status_id == 1">
+							<div v-if="lead.status.code == 1">
 								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
 							</div>
 						</div>
@@ -30,7 +30,7 @@
 				<div class="swimlane">
 					<div v-if="leads && leads.length" class="leads" key="leads">
 						<div class="lead" v-for="(lead, index) in leads" :key="index">
-							<div v-if="lead.status_id == 2">
+							<div v-if="lead.status.code == 2">
 								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
 							</div>
 						</div>
@@ -41,7 +41,7 @@
 				<div class="swimlane">
 					<div v-if="leads && leads.length" class="leads" key="leads">
 						<div class="lead" v-for="(lead, index) in leads" :key="index">
-							<div v-if="lead.status_id == 3">
+							<div v-if="lead.status.code == 3">
 								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
 							</div>
 						</div>
@@ -52,7 +52,7 @@
 				<div class="swimlane">
 					<div v-if="leads && leads.length" class="leads" key="leads">
 						<div class="lead" v-for="(lead, index) in leads" :key="index">
-							<div v-if="lead.status_id == 4">
+							<div v-if="lead.status.code == 4">
 								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
 							</div>
 						</div>

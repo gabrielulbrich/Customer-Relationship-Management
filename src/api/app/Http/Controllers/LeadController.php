@@ -47,9 +47,27 @@ class LeadController extends Controller
 
         $page_user = $user->page()->first();
         $leadById = Lead::where('page_id', $page_user->id )
-                                ->where('id', $leadId)
-                                ->get()
-                                ->first();
+                    ->where('id', $leadId)
+                    ->get()
+                    ->first();
+        $anotherLeads = Lead::select('id','name', 'priority_id', 'status_id', 'user_id', 'created_at', 'updated_at')
+                    ->where('page_id', $page_user->id )
+                    ->where('email', $leadById->email)
+                    ->where('id', '<>', $leadId)
+                    ->get();
+
+        foreach ($anotherLeads as $other) {
+            $other->summary = $page_user->epic.' - '.$other->name.' - '.$other->id;
+            $other->created = $other->created_at->format('d M Y');
+            $other->priority->code = $other->priority->id;
+            $other->priority->name = $other->priority->priority;
+            $other->priority_icon = $other->priority->icon_url;
+            $other->status->code = $other->status->id;
+            $other->status->name = $other->status->status;
+            $other->user;
+            $other->user->avatar = $other->user->avatar_url;
+        }
+
         $status = Status::all('id as code', 'status as name');
         $priorities = Priority::all('id as code', 'priority as name', 'icon_url');
 
@@ -73,6 +91,7 @@ class LeadController extends Controller
             'lead' => $leadById,
             'status' => $status,
             'priorities' => $priorities,
+            'another_leads' => $anotherLeads,
         ]);
     }
 

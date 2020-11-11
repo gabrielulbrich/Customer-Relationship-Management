@@ -29,8 +29,9 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
 
     $router->get('leads', 'LeadController@getAllLeads');
     $router->get('lead/report', 'LeadController@report');
-    $router->get('lead/{leadId}', 'LeadController@getLeadById');
+
     $router->put('lead/status', 'LeadController@updateStatus');
+    $router->get('lead/{leadId}', 'LeadController@getLeadById');
     $router->put('lead/priority', 'LeadController@updatePriority');
     $router->put('lead/user', 'LeadController@updateUser');
     $router->post('lead/comment', 'LeadController@submitCommentLead');
