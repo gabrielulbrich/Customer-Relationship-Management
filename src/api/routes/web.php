@@ -34,6 +34,12 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->put('lead/priority', 'LeadController@updatePriority');
     $router->put('lead/user', 'LeadController@updateUser');
     $router->post('lead/comment', 'LeadController@submitCommentLead');
+
+    $router->get('pages', 'PageController@getAllPages'); //ONLY MASTER
+    $router->post('page/create', 'PageController@store'); //ONLY MASTER
+    $router->put('page/update', 'PageController@update'); //ONLY MASTER
+    $router->delete('page/delete', 'PageController@delete'); //ONLY ADMIN
+
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

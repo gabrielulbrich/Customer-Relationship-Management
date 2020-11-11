@@ -29,7 +29,10 @@ const store = new Vuex.Store({
     },
     isAdmin: state => {
       return state.user.profile.name == 'Administrador'
-    }
+    },
+    isMaster: state => {
+      return state.user.id == 1
+    },
   },
   mutations: {
     UPDATE_LOGIN(state, payload) { 

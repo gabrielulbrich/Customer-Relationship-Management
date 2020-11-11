@@ -40,8 +40,8 @@ export default {
             menu : [
                 {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
                 {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board') },
-                {label: 'Chart', icon: 'pi pi-fw pi-chart-bar', to: this.pageUrl('/chart') },
                 {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin()} },
+                {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster()} },
                 {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://www.primefaces.org/sigma-vue/#/"}},
             ]
         }
@@ -58,6 +58,9 @@ export default {
         },
         isAdmin(){
             return this.$store.getters.isAdmin;
+        },
+        isMaster(){
+            return this.$store.getters.isMaster;
         },
         onWrapperClick() {
             if (!this.menuClick) {

@@ -6,6 +6,7 @@ import Board from '@/views/Crm/Board/Board.vue';
 import Lead from '@/views/Crm/Lead/Lead.vue';
 import Profile from '@/views/Crm/Profile/Profile.vue';
 import Users from '@/views/Crm/Users/Users.vue';
+import Pages from '@/views/Crm/Pages/Pages.vue';
 
 Vue.use(Router);
 
@@ -55,6 +56,14 @@ const router = new Router({
 					path: 'users',
 					component: Users,
 					name: 'users',
+					meta: {
+						requiresAdmin: true
+					}
+				},
+				{
+					path: 'pages',
+					component: Pages,
+					name: 'pages',
 					meta: {
 						requiresAdmin: true
 					}

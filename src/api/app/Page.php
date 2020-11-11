@@ -32,4 +32,8 @@ class Page extends Model
     public function users(){
         return $this->belongsToMany('App\User','users_pages');
     }
+
+    public function pages(){
+        return $this->belongsToMany('App\Page','users_pages');
+    }
 }
