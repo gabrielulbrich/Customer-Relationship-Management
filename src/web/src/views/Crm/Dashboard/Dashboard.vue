@@ -77,7 +77,6 @@ export default {
         this.errors = [];
         api.get(`/lead/report`)
         .then((response) => {
-            console.log(response.data)
             this.activity = response.data.activity;
             this.report = response.data.report;
         })

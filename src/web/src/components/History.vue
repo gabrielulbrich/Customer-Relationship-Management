@@ -30,20 +30,6 @@
 
 			}
 		},
-		watch: {
-			histories() {
-				console.log('KKDWAKKDWAKTESTE HIGSOTRI')
-			},
-		},
-		watch: {
-
-		},
-		methods: {
-			
-		},
-		computed: {
-
-		},
 	}
 </script>
 

@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import { mapFields } from "@/helpers.js";
-
 export default {
     name: "RegisterUser",
     data() {
@@ -59,7 +57,7 @@ export default {
         redirectToDashBoard() {
             this.$router.push({ name: "dashboard" });
         },
-        async registerUser(event){
+        async registerUser(){
             this.errors = [];
             try {
                 await this.$store.dispatch("registerUser", this.register);

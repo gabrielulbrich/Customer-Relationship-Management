@@ -38,7 +38,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->get('pages', 'PageController@getAllPages'); //ONLY MASTER
     $router->post('page/create', 'PageController@store'); //ONLY MASTER
     $router->put('page/update', 'PageController@update'); //ONLY MASTER
-    $router->delete('page/delete', 'PageController@delete'); //ONLY ADMIN
+    $router->delete('page/delete', 'PageController@delete'); //ONLY MASTER
 
 });
 

@@ -103,8 +103,6 @@
 </template>
 
 <script>
-import { api } from "@/services.js";
-
 export default {
 	components: {
 

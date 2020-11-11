@@ -149,15 +149,15 @@ export default {
 			this.editUserDialog = false;
 			this.submitted = false;
 			this.deleteUserDialog = false;
-			this.user = [];
+			this.user = {};
 		},
 		async saveUser(){
 			this.errors = [];
 			try{
 				await api.post(`/user/register`, this.user)
 				.then(response => {
-					this.users.push(response.data)
-					this.user = [];
+					this.users.push(response.data);
+					this.$toast.add({severity:'success', summary: 'Sucesso', detail: `Usuário ${response.data.name} criado.`, life: 3000});
 				})
 				await this.hideDialog();
 			} catch(error){
@@ -168,10 +168,11 @@ export default {
 			this.errors = [];
 			try{
 				await api.put(`/user/update-profile`, {profile_id: this.user.profile.code, user_id: this.user.id })
-				.then(response => {
+				.then((response) => {
 					if (this.user.id) {
 						this.$set(this.users, this.findIndexById(this.user.id), this.user);
 					}
+					this.$toast.add({severity:'success', summary: 'Sucesso', detail: `Usuário ${response.data.name} alterado.`, life: 3000});
 				})
 				await this.hideDialog();
 			} catch(error){
@@ -187,7 +188,7 @@ export default {
 				api.delete(`/user/delete?user_id=${this.user.id}`)
 				.then(response => {
 					this.users = this.users.filter(val => val.id !== response.data.id);
-					this.$toast.add({severity:'success', summary: 'Successful', detail: 'User Deleted', life: 3000});
+					this.$toast.add({severity:'success', summary: 'Sucesso', detail: `Usuário ${response.data.name} excluído.`, life: 3000});
 				})
 				this.hideDialog();
 			} catch(error){
