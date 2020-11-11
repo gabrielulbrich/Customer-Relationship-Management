@@ -22,6 +22,11 @@
 						</div>
 					</template>
 
+					<Column headerStyle="width: 8rem">
+						<template #body="slotProps">
+							<img :src="slotProps.data.logo_url" alt="Avatar" class="product-image" />
+						</template>
+					</Column>
 					<Column field="name" header="Nome da página" sortable></Column>
 					<Column field="site" header="Site" sortable></Column>
 					<Column field="epic" header="EPIC" sortable></Column>
@@ -55,13 +60,13 @@
                         <InputText id="refer" placeholder="refer" type="refer"  :class="{'p-invalid': errors.length && errors[0].refer}" aria-describedby="refer-help" v-model="page.refer"/>
                         <small class="p-invalid" v-if="errors.length && errors[0].refer">{{errors[0].refer[0]}}</small>
                     </div>
-					<p>Informações de acesso:</p>
+					<p>Informações de acesso do administrador da página:</p>
 					<div class="p-field">
                         <InputText id="name" placeholder="nome" type="text" :class="{'p-invalid': errors.length && errors[0].name}" aria-describedby="name-help" v-model="user.name" />
                         <small class="p-invalid" v-if="errors.length && errors[0].name">{{errors[0].name[0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="cpf" placeholder="cpf" type="text"  :class="{'p-invalid': errors.length && errors[0].cpf}" aria-describedby="cpf-help" v-model="user.cpf"/>
+                        <InputMask mask="999.999.999-99" id="cpf" placeholder="cpf" type="text"  :class="{'p-invalid': errors.length && errors[0].cpf}" aria-describedby="cpf-help" v-model="user.cpf"/>
                         <small class="p-invalid" v-if="errors.length && errors[0].cpf">{{errors[0].cpf[0]}}</small>
                     </div>
                     <div class="p-field">

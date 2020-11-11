@@ -49,6 +49,7 @@ class PageController extends Controller
             $page->epic = $request->input('page')['epic'];
             $page->token = $request->input('page')['token'];
             $page->refer = $request->input('page')['refer'];
+            $page->logo_url = "/assets/page_icons/page.png";
             $page->save();
 
             $user = new User;

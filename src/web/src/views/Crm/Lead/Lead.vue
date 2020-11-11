@@ -4,7 +4,7 @@
 			<div class="p-col-12">
 				<div class="header">
 					<div class="header-image">
-						<img src="https://issues.redhat.com/secure/projectavatar?pid=12318028&avatarId=25966" alt="Logo">
+						<img :src="$store.state.page.logo_url" alt="Logo">
 					</div>
 					<div class="header-main">
 						<span>{{ $store.state.page.name }} / {{ $route.params.id }}</span>

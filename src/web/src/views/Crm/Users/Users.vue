@@ -44,7 +44,7 @@
                         <small class="p-invalid" v-if="errors.length && errors[0].name">{{errors[0].name[0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="cpf" placeholder="cpf" type="text"  :class="{'p-invalid': errors.length && errors[0].cpf}" aria-describedby="cpf-help" v-model="user.cpf"/>
+                        <InputMask mask="999.999.999-99" id="cpf" placeholder="cpf" type="text"  :class="{'p-invalid': errors.length && errors[0].cpf}" aria-describedby="cpf-help" v-model="user.cpf"/>
                         <small class="p-invalid" v-if="errors.length && errors[0].cpf">{{errors[0].cpf[0]}}</small>
                     </div>
                     <p>Informações de acesso:</p>
