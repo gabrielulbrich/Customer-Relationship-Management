@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use App\History;
+use App\Comment;
 use App\User;
 use App\Lead;
 use App\Priority;
@@ -80,8 +80,8 @@ class LeadController extends Controller
         $leadById->user;
         $leadById->avatar_url = $leadById->user->avatar_url;
         $leadById->created = $leadById->created_at->format('d M');
-        $leadById->histories;
-        foreach ($leadById->histories as $history){
+        $leadById->comments;
+        foreach ($leadById->comments as $history){
             $history->user = User::find($history->user_id);
             $history->created = $history->created_at->format('d M Y');
             $history->avatar_url = $history->user->avatar_url;
@@ -107,7 +107,7 @@ class LeadController extends Controller
         }
 
         try{
-            $history = new History;
+            $history = new Comment;
             $history->user_id = $request->input('user_id');
             $history->comment = $request->input('comment');
             $history->save();

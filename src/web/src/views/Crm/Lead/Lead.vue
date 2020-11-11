@@ -59,8 +59,8 @@
 							<Button label="Comentar" @click="submitComment" class="p-mr-2 p-mb-2" style="float:right"></Button>
 						</div>
 					</div>
-					<div class="p-col-12 history">
-						<History :histories="lead.histories" />
+					<div class="p-col-12 comment">
+						<Comment :comments="lead.comments" />
 					</div>
 					
 				</div>
@@ -102,11 +102,11 @@
 
 <script>
 import { api } from "@/services.js";
-import History from '@/components/History.vue';
+import Comment from '@/components/Comment.vue';
 
 export default {
 	components: {
-		History
+		Comment
     },
 	data(){
 		return{
@@ -177,8 +177,8 @@ export default {
 		submitComment(){
 			api.post("/lead/comment", {lead_id: this.lead.id, user_id: this.$store.state.user.id, comment: this.comment})
 			.then((response) => {
-				this.lead.histories.unshift(response.data);
-				console.log(this.lead.histories);
+				this.lead.comments.unshift(response.data);
+				console.log(this.lead.comments);
 			})
 		}
 	},

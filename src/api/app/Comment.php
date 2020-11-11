@@ -6,7 +6,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
-class History extends Model
+class Comment extends Model
 {
     use Authenticatable, Authorizable;
 

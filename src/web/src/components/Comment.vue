@@ -1,6 +1,6 @@
 <template>
-	<div v-if="histories && histories.length">
-		<div v-for="(history, index) in histories" :key="index" class="messages">
+	<div v-if="comments && comments.length">
+		<div v-for="(history, index) in comments" :key="index" class="messages">
 			<div class="messages-image">
 				<img :src="history.avatar_url" alt="Logo">
 			</div>
@@ -21,7 +21,7 @@
 <script>
 	export default {
 		props: {
-			histories: {
+			comments: {
 				type: Array,
 			},
 		},

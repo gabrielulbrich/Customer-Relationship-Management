@@ -43,8 +43,8 @@ class Lead extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function histories(){
-        return $this->belongsToMany('App\History','leads_history')->orderBy('created_at', 'desc');
+    public function comments(){
+        return $this->belongsToMany('App\Comment','leads_comments')->orderBy('created_at', 'desc');
     }
 
 }
