@@ -27,16 +27,17 @@ class UserController extends Controller
     public function searchUsers(Request $request)
     {
         if (!empty($request->input('username'))){
-            $users = User::select( 'id','name','email', 'avatar_url' )
+            $user = User::find(Auth::id());
+            $users = $user->users()->select( 'id','name','email', 'avatar_url' )
                 ->where( "name", "LIKE", "%{$request->input('username')}%" )
                 ->limit('20')
                 ->get();
         }else {
-            $users = User::select( 'id','name','email', 'avatar_url' )
+            $user = User::find(Auth::id());
+            $users = $user->users()->select( 'id','name','email', 'avatar_url' )
                 ->limit('20')
                 ->get();
         }
-
         return response()->json($users);
     }
 
