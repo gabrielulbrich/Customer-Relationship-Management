@@ -45,6 +45,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('login', 'AuthController@login');
+    $router->post('new-account', 'UserController@newAccount');
 
 //    $router->post('/api/login', 'UserController@login');
 //

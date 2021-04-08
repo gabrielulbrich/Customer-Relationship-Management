@@ -143,7 +143,6 @@ class UserController extends Controller
         ];
         $this->validate($request, $dataValidation, $this->messages);
 
-
         $user = User::find($request->input('user_id'));
         $user->user()->detach();
         $user->destroy($request->input('user_id'));
@@ -151,4 +150,46 @@ class UserController extends Controller
         return response()->json($user, 200);
     }
 
+    /**
+     * Store a new user.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function newAccount(Request $request)
+    {
+        $dataValidation = [
+            'name' => 'required|string',
+            'email' => 'required|unique:users|email:rfc,dns',
+            'cpf' => 'required|string|unique:users',
+            'password' => 'required|confirmed|max:255|min:6',
+            'site_name'  => 'required|exists:pages,site|max:255'
+        ];
+        $this->validate($request, $dataValidation, $this->messages);
+
+        $site = Page::firstWhere('site', $request->input('site_name'));
+
+        try {
+            $user = new User;
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->cpf = $request->input('cpf');
+            $user->avatar_url = "/assets/user_icons/user.png";
+            $user->password = app('hash')->make($request->input('password'));
+            $user->save();
+            $user->page()->attach([$site->id], ['profile_id' => 2,
+                                                'status' => 'IN APPROVAL']);
+            $user->avatar = $user->avatar_url;
+
+            return response()->json($user, 201);
+
+        } catch (\Exception $e) {
+            //return error message
+            return response()->json( [
+                'errors' => [
+                    'message' => $e->getMessage()
+                ],
+            ], 409);
+        }
+    }
 }
