@@ -39,9 +39,9 @@ export default {
             mobileMenuActive: false,
             menu : [
                 {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
-                {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board') },
-                {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin()} },
-                {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster()} },
+                {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board'), visible: () => { return this.isAdmin || this.isAnonymous }},
+                {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin } },
+                {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster } },
                 {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://www.primefaces.org/sigma-vue/#/"}},
             ]
         }
@@ -55,12 +55,6 @@ export default {
     methods: {
         pageUrl(to) {
             return '/'+this.$store.getters.pageName+to
-        },
-        isAdmin(){
-            return this.$store.getters.isAdmin;
-        },
-        isMaster(){
-            return this.$store.getters.isMaster;
         },
         onWrapperClick() {
             if (!this.menuClick) {
@@ -137,6 +131,12 @@ export default {
         },
     },
     computed: {
+        ...mapGetters([
+          'isAdmin',
+          'isMaster',
+          'isUser',
+          'isAnonymous',
+        ]),
         containerClass() {
             return ['layout-wrapper', {
                 'layout-overlay': this.layoutMode === 'overlay',

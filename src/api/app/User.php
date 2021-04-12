@@ -67,4 +67,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function profile(){
         return $this->belongsToMany('App\Profile','users_pages')->select('id as code', 'profile as name')->withPivot('page_id');
     }
+
+    public function profileTest(){
+        return $this->belongsToMany('App\Profile','users_pages');
+    }
 }

@@ -123,7 +123,6 @@ export default {
         await this.$store.dispatch("loginUser", { email: this.new_account.email, password: this.new_account.password });
         await this.redirectToDashBoard();
 			} catch(error){
-        console.log(error)
         this.errors = [];
 				this.errors.push(error.response.data)
       }

@@ -96,7 +96,7 @@ class PageController extends Controller
         return response()->json($page);
     }
 
-    //todo: validar se usuario master esta fazenndo requisicao
+    //todo: validar se usuario master esta fazendo requisicao
     public function delete(Request $request)
     {
         $dataValidation = [
@@ -110,5 +110,28 @@ class PageController extends Controller
         $page->destroy($request->input('id'));
 
         return response()->json($page, 200);
+    }
+
+    //todo: validar se usuário admin está fazendo a requisição
+    public function getNotifications() {
+        $user = User::find(Auth::id());
+        $page_user = $user->page()->first();
+        return $page_user->users()->where('profile_id', 3)->get();
+    }
+
+    //todo: validar se usuário admin está fazendo a requisição
+    public function answerNotification(Request $request) {
+        $user_admin = User::find(Auth::id());
+        if ($request->input('answer') == TRUE) {
+            $user = User::find($request->input('user_id'));
+            $user->profile = $user->profile()->first();
+            $user->profile()->updateExistingPivot($user->profile->code, ['profile_id' => 2]);
+        } else {
+            $user = User::find($request->input('user_id'));
+            $user->profile = $user->profile()->first();
+            $user->profile()->updateExistingPivot($user->profile->code, ['profile_id' => 4]);
+        }
+
+        return $user;
     }
 }

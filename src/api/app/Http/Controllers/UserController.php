@@ -41,6 +41,7 @@ class UserController extends Controller
         return response()->json($users);
     }
 
+    //todo: validar se a request foi feita pelo admin
     public function allUsersFromPage(){
         $user = User::find(Auth::id());
         $users = $user->users()->get();
@@ -56,7 +57,8 @@ class UserController extends Controller
         ]);
     }
 
-    //todo: validar se usuario que esta senndo alteado pertence a mesma pagina do admin que esta alterando.
+    //todo: validar se usuario que esta sendo alteado pertence a mesma pagina do admin que esta alterando.
+    //todo: validar se a request foi feita pelo próprio usuário
     public function update(Request $request)
     {
         if ($request->has('password')){
@@ -79,6 +81,7 @@ class UserController extends Controller
         return response()->json($user);
     }
 
+    //todo: validar se a request foi feita pelo admin
     public function updateProfile(Request $request){
         if ($request->has('profile_id')){
             $dataValidation['profile_id'] = 'required';
@@ -99,6 +102,7 @@ class UserController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
+    //todo: validar se a request foi feita pelo admin
     public function store(Request $request)
     {
         $dataValidation = [
@@ -136,6 +140,7 @@ class UserController extends Controller
         }
     }
 
+    //todo: validar se a request foi feita pelo admin
     public function delete(Request $request)
     {
         $dataValidation = [

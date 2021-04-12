@@ -7,6 +7,12 @@
 			<span class="username">{{ name }}</span>
 			<i class="pi pi-fw pi-cog"></i>
 		</button>
+		<div class="p-d-flex p-jc-center">
+      <span v-if="isMaster" class="p-tag">Master</span>
+      <span v-else-if="isAdmin" class="p-tag">Admin</span>
+      <span v-else-if="isUser" class="p-tag">User</span>
+			<span v-else-if="isAnonymous" class="p-tag p-tag-danger">Inativo</span>
+		</div>
         <transition name="layout-submenu-wrapper">
             <ul v-show="expanded">
                 <li><router-link class="p-link" :to="{name: 'profile'}"><button class="p-link"><i class="pi pi-fw pi-user"></i><span>Perfil</span></button></router-link></li>
@@ -18,6 +24,8 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+
 	export default {
 		data() {
 			return {
@@ -31,6 +39,12 @@
 			}
 		},
 		computed: {
+			...mapGetters([
+				'isAdmin',
+        'isMaster',
+        'isUser',
+        'isAnonymous',
+			]),
 			avatar(){
 				return this.$store.state.user.avatar
 			},

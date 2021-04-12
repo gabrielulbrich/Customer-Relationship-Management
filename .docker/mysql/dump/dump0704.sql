@@ -167,7 +167,10 @@ CREATE TABLE `profiles` (
 
 INSERT INTO `profiles` (`id`, `profile`) VALUES
 (1,	'Administrador'),
-(2,	'Usuário');
+(2,	'Usuário'),
+(3,	'Em Aprovação'),
+(4,	'Inativo'),
+(5,	'Master');
 
 DROP TABLE IF EXISTS `shops`;
 CREATE TABLE `shops` (
@@ -241,7 +244,6 @@ CREATE TABLE `users_pages` (
   `user_id` int(11) NOT NULL,
   `page_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
-  `status` varchar(45) NOT NULL,
   PRIMARY KEY (`user_id`,`page_id`),
   KEY `fk_USUARIO_PAGINA_USUARIO1_idx` (`user_id`),
   KEY `fk_USUARIO_PAGINA_PAGINA1_idx` (`page_id`),
@@ -251,12 +253,16 @@ CREATE TABLE `users_pages` (
   CONSTRAINT `fk_users_pages_profiles1` FOREIGN KEY (`profile_id`) REFERENCES `profiles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `users_pages` (`user_id`, `page_id`, `profile_id`, `status`) VALUES
-(1,	1,	1,	''),
-(8,	2,	1,	''),
-(29,	2,	2,	'IN APPROVAL'),
-(30,	2,	2,	'IN APPROVAL'),
-(31,	2,	2,	'IN APPROVAL'),
-(32,	2,	2,	'IN APPROVAL');
+INSERT INTO `users_pages` (`user_id`, `page_id`, `profile_id`) VALUES
+(1,	1,	1),
+(8,	2,	1),
+(22,	1,	2),
+(29,	2,	2),
+(30,	2,	2),
+(32,	2,	2),
+(23,	1,	3),
+(24,	1,	3),
+(21,	1,	4),
+(31,	2,	4);
 
--- 2021-04-07 22:00:46
+-- 2021-04-12 23:17:02

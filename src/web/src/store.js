@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     page: {
       id: "",
       name: "",
-      site: ""
+      site: "",
+      notification: [{}]
     },
   },
   getters: {
@@ -28,10 +29,19 @@ const store = new Vuex.Store({
       return state.page.site.split('.')[0]
     },
     isAdmin: state => {
-      return state.user.profile.name == 'Administrador'
+      return state.user.profile.code == 1
     },
     isMaster: state => {
-      return state.user.id == 1
+      return state.user.profile.code == 1
+    },    
+    isUser: state => {
+      return state.user.profile.code == 2
+    },
+    isAnonymous: state => {
+      return state.user.profile.code == 3 || state.user.profile.code == 4
+    },
+    countNotification: state => {
+      return Object.keys(state.page.notification).length;
     },
   },
   mutations: {
@@ -46,6 +56,9 @@ const store = new Vuex.Store({
     },
     UPDATE_PROFILE(state, payload){
       state.user.profile = Object.assign(state.user.profile, payload);
+    },
+    UPDATE_NOTIFICATION(state, payload) {
+      state.page.notification = payload
     }
   },
   actions: {
@@ -83,7 +96,7 @@ const store = new Vuex.Store({
         context.commit("UPDATE_LOGIN", true);
         window.localStorage.token = `Bearer ${response.data.token}`;
       })
-    }
+    },
   }
 });
 
