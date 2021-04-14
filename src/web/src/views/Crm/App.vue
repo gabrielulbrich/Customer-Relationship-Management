@@ -28,6 +28,7 @@ import AppTopBar from './AppTopbar.vue';
 import AppProfile from './AppProfile.vue';
 import AppMenu from './AppMenu.vue';
 import AppFooter from './AppFooter.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -38,11 +39,10 @@ export default {
             overlayMenuActive: false,
             mobileMenuActive: false,
             menu : [
-                {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
-                {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board'), visible: () => { return this.isAdmin || this.isAnonymous }},
-                {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin } },
-                {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster } },
-                {label: 'View Source', icon: 'pi pi-fw pi-search', command: () => {window.location = "https://www.primefaces.org/sigma-vue/#/"}},
+              {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
+              {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board'), visible: () => { return this.isAdmin || this.isUser }},
+              {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin } },
+              {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster } },
             ]
         }
     },

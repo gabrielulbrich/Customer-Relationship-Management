@@ -24,7 +24,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex';
 
 	export default {
 		data() {
@@ -41,9 +41,9 @@
 		computed: {
 			...mapGetters([
 				'isAdmin',
-        'isMaster',
-        'isUser',
-        'isAnonymous',
+				'isMaster',
+				'isUser',
+				'isAnonymous',
 			]),
 			avatar(){
 				return this.$store.state.user.avatar

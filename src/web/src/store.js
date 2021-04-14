@@ -32,13 +32,19 @@ const store = new Vuex.Store({
       return state.user.profile.code == 1
     },
     isMaster: state => {
-      return state.user.profile.code == 1
+      return state.user.profile.code == 5
     },    
     isUser: state => {
       return state.user.profile.code == 2
     },
     isAnonymous: state => {
       return state.user.profile.code == 3 || state.user.profile.code == 4
+    },
+    isInactive: state => {
+      return state.user.profile.code == 4
+    },
+    isInApproval: state => {
+      return state.user.profile.code == 3
     },
     countNotification: state => {
       return Object.keys(state.page.notification).length;

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class LeadController extends Controller
 {
-
+    //todo: verificar o perfil do usuário
     public function getAllLeads(){
         $user = User::find(Auth::id());
 
@@ -42,6 +42,7 @@ class LeadController extends Controller
         ]);
     }
 
+    //todo: verificar o perfil do usuário
     public function getLeadById($leadId){
         $user = User::find(Auth::id());
 
@@ -95,6 +96,7 @@ class LeadController extends Controller
         ]);
     }
 
+    //todo: verificar o perfil do usuário
     public function submitCommentLead(Request $request){
         $validator = Validator::make($request->all(), [
             'lead_id' => 'required|numeric',
@@ -229,6 +231,7 @@ class LeadController extends Controller
         }
     }
 
+    //todo: verificar o perfil do usuário que faz a requisição
     public function report(){
         $oneWeekAgo = \Carbon\Carbon::today()->subWeek();
         $user = User::find(Auth::id());
