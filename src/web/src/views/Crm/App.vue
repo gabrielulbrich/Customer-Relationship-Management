@@ -41,8 +41,9 @@ export default {
             menu : [
               {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
               {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board'), visible: () => { return this.isAdmin || this.isUser }},
-              {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin } },
-              {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster } },
+              {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin }},
+              {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster }},
+              {label: 'Desenvolvedor', icon: 'pi pi-fw pi-user', to: this.pageUrl('/developer'), visible: () => { return this.isAdmin }},
             ]
         }
     },

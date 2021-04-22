@@ -44,6 +44,8 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->post('page/answer-notification', 'PageController@answerNotification'); //ONLY ADMIN PAGE
     $router->post('page/new-request', 'PageController@newRequest'); //ONLY ADMIN PAGE
 
+    $router->get('api/get-all', 'ApiController@select');
+
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

@@ -36,4 +36,8 @@ class Page extends Model
     public function pages(){
         return $this->belongsToMany('App\Page','users_pages');
     }
+
+    public function apis(){
+        return $this->belongsToMany('App\Api','pages_apis', 'page_id');
+    }
 }
