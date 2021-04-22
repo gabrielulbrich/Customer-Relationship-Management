@@ -134,4 +134,13 @@ class PageController extends Controller
 
         return $user;
     }
+
+    //todo: validar se usuário certo está fazendo a request
+    public function newRequest(Request $request) {
+        $user = User::find(Auth::id());
+        $user->profile = $user->profile()->first();
+        $user->profile()->updateExistingPivot($user->profile->code, ['profile_id' => 3]);
+        $user->profile = $user->profile()->first();
+        return $user;
+    }
 }

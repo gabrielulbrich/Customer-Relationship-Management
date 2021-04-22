@@ -42,6 +42,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->delete('page/delete', 'PageController@delete'); //ONLY MASTER
     $router->get('page/get-notifications', 'PageController@getNotifications'); //ONLY ADMIN PAGE
     $router->post('page/answer-notification', 'PageController@answerNotification'); //ONLY ADMIN PAGE
+    $router->post('page/new-request', 'PageController@newRequest'); //ONLY ADMIN PAGE
 
 });
 

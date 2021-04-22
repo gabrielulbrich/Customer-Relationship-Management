@@ -117,7 +117,6 @@ export default {
 			try{
 				await api.post(`/new-account`, this.new_account)
 				.then(response => {
-          console.log(response, 'aprovado')
 					this.$toast.add({severity:'success', summary: 'Sucesso', detail: `Usuário ${response.data.name} criado.`, life: 3000});
         })
         await this.$store.dispatch("loginUser", { email: this.new_account.email, password: this.new_account.password });
