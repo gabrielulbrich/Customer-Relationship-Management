@@ -3,6 +3,15 @@
 		<div class="p-col-12">
 			<div class="card">
 				<h5>Customização de APIS</h5>
+        <div class="p-col-12 p-mb-2 p-lg-4 p-mb-lg-0">
+          <div class="p-inputgroup">
+            <span class="p-inputgroup-addon">
+              /{{ pageName }}/
+            </span>
+            <InputText v-model="newApiName" placeholder=""/>
+            <Button label=" Novo" class="p-mr-2 p-mb-2 pi pi-plus" @click.prevent="newApi()"/>
+          </div>
+        </div>
 				<Accordion>
           <div v-for="(api, index) in apis" :key="index">
             <AccordionTab :header="api.api">
@@ -23,9 +32,10 @@
                   </template>
                 </Column>
               </DataTable>
-				      <Button label="Salvar" class="p-mr-2 p-mb-2"/>
+				      <Button label="" class="p-mr-2 p-mb-2 pi pi-plus" @click.prevent="newField(api.id)"/>
             </AccordionTab>
           </div>
+          <Button label=" Salvar" class="p-button-success p-mr-2 p-mb-2 pi pi-check" />
 				</Accordion>
 			</div>
 		</div>
@@ -35,6 +45,7 @@
 
 <script>
 import { api } from "@/services.js";
+import { mapGetters } from 'vuex';
 
 export default {
 	data() {
@@ -82,9 +93,10 @@ export default {
           "pivot":{ 
             "page_id":1,
             "api_id":2
-            }
           }
+        }
       ],
+      newApiName: "",
       typeValues: [
           {name: 'Texto', code: 'text'},
 					{name: 'Numérico', code: 'numeric'},
@@ -99,22 +111,50 @@ export default {
 	mounted() {
 	},
 	methods: {
-		loadApis(){
+		loadApis() {
 			api.get("/api/get-all")
 			.then((response) => {
 				this.apis = response.data.apis;
         console.log(this.apis)
 			})
 		},
-    onRowEditInit(event) {
-      return 'ok';
-      // this.originalRows[event.index] = {...this.products3[event.index]};
+    newField(api) {
+      this.apis.forEach(e => {
+        if (e.id == api){
+          e.fields.push(            
+            {
+              "name": "",
+              "type": {
+                "name":"",
+                "code": ""
+              },
+              "description": "",
+            },)
+        }
+      });
     },
-    onRowEditCancel(event) {
-      return 'bah';
-      // this.products3[event.index] = this.originalRows[event.index];
-    },
-	}
+    newApi() {
+      this.apis.push({  
+        "id": this.apis[this.apis.length - 1] + 1,
+        "api": `/${this.pageName}/${this.newApiName}`,
+        "fields": [
+          {
+            "name": "",
+            "type": {
+              "name":"",
+              "code": ""
+            },
+            "description": "",
+          },
+        ],
+      })
+    }
+	},
+  computed: {
+    ...mapGetters([
+      'pageName',
+    ]),
+  }
 }
 </script>
 
