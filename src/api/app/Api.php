@@ -9,6 +9,7 @@ use Laravel\Lumen\Auth\Authorizable;
 class Api extends Model
 {
     use Authenticatable, Authorizable;
-    
+
+    protected $fillable = ['page_id', 'api', 'api_full', 'fields', 'weight'];
 
 }

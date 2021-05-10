@@ -8,6 +8,7 @@ import Profile from '@/views/Crm/Profile/Profile.vue';
 import Users from '@/views/Crm/Users/Users.vue';
 import Pages from '@/views/Crm/Pages/Pages.vue';
 import Developer from '@/views/Crm/Developer/Developer.vue';
+import Data from '@/views/Crm/Data/Data.vue';
 
 Vue.use(Router);
 
@@ -73,6 +74,14 @@ const router = new Router({
 					path: 'developer',
 					component: Developer,
 					name: 'developer',
+					meta: {
+						requiresAdmin: true
+					}
+				},
+				{
+					path: 'data',
+					component: Data,
+					name: 'data',
 					meta: {
 						requiresAdmin: true
 					}

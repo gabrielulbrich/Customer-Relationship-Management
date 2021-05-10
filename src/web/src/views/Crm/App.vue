@@ -33,18 +33,24 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            layoutMode: 'static',
-            layoutColorMode: 'dark',
-            staticMenuInactive: false,
-            overlayMenuActive: false,
-            mobileMenuActive: false,
-            menu : [
-              {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
-              {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board'), visible: () => { return this.isAdmin || this.isUser }},
-              {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin }},
-              {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster }},
-              {label: 'Desenvolvedor', icon: 'pi pi-fw pi-user', to: this.pageUrl('/developer'), visible: () => { return this.isAdmin }},
-            ]
+          layoutMode: 'static',
+          layoutColorMode: 'dark',
+          staticMenuInactive: false,
+          overlayMenuActive: false,
+          mobileMenuActive: false,
+          menu : [
+            {label: 'Dashboard', icon: 'pi pi-fw pi-home', to: this.pageUrl('/dashboard') },
+            {label: 'Board', icon: 'pi pi-fw pi-table', to: this.pageUrl('/board'), visible: () => { return this.isAdmin || this.isUser }},
+            {label: 'Users', icon: 'pi pi-fw pi-user', to: this.pageUrl('/users'), visible: () => { return this.isAdmin }},
+            {label: 'Pages', icon: 'pi pi-fw pi-user', to: this.pageUrl('/pages'), visible: () => { return this.isMaster }},
+            {
+              label: 'Desenvolvedor', icon: 'pi pi-fw pi-user', visible: () => { return this.isAdmin },
+              items: [
+                {label: 'API', icon: 'pi pi-fw pi-user-edit', to: this.pageUrl('/developer')},
+                {label: 'Dados', icon: 'pi pi-fw pi-user-edit', to: this.pageUrl('/data')},
+              ]
+            }
+          ]
         }
     },
     watch: {

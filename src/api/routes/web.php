@@ -45,7 +45,8 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->post('page/new-request', 'PageController@newRequest'); //ONLY ADMIN PAGE
 
     $router->get('api/get-all', 'ApiController@select');
-
+    $router->post('api/store-api', 'ApiController@storeApi');
+    $router->delete('api/delete-api', 'ApiController@deleteApi');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
@@ -59,5 +60,4 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 //    $router->put('/api/user/{id}', 'UserController@update');
 });
 
-
-
+Route::post('{page}/{api}', 'ApiController@storeData');
