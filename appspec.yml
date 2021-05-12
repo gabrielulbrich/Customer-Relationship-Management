@@ -1,5 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: ./Jenkinsfile
-    destination: /
+  - source: src/api
+    destination: /var/www/html/crm-lumen
+  - source: src/web
+    destination: /var/www/html/crm-vue
