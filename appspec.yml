@@ -5,7 +5,9 @@ files:
     destination: /var/www/crm-lumen
   - source: src/web
     destination: /var/www/crm-vue
+  - source: ./appspec.yml
+    destination: /var/www/
 hooks:
   AfterInstall:
-    - location: ./scripts/after-install.sh
+    - location: scripts/after-install.sh
       timeout: 900
