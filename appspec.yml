@@ -1,0 +1,7 @@
+version: 0.0
+os: linux
+files:
+  - source: src/api
+    destination: /var/www/html/crm-lumen
+  - source: src/web
+    destination: /var/www/html/crm-vue
