@@ -1,5 +1,6 @@
 <template>
 		<div class="p-grid p-mt-6 p-jc-center">
+      <Toast />
 			<div v-if="!forgot && !new_account_page" class="p-col-fixed"  style="width:450px;">
         <div class="card p-fluid">
             <div>
