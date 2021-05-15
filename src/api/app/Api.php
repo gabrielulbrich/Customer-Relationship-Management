@@ -10,6 +10,6 @@ class Api extends Model
 {
     use Authenticatable, Authorizable;
 
-    protected $fillable = ['page_id', 'api', 'api_full', 'fields', 'weight'];
+    protected $fillable = ['page_id', 'api', 'fields', 'weight'];
 
 }

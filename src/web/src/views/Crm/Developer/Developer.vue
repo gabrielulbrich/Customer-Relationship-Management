@@ -18,7 +18,7 @@
             <AccordionTab>
               <template #header>
                 <div class="p-d-flex p-jc-between" style="width: 100%">
-                  <span>{{ api.api_full }}</span>
+                  <span>/{{pageName}}/{{ api.api }}</span>
 				          <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2 p-mb-2" @click.prevent="confirmDeleteApi(api)" />
                 </div>
               </template>
@@ -131,7 +131,7 @@ export default {
     newApi() {
       this.apis.push({
         "weight": this.apis.length >= 1 ? parseInt(this.apis.length) + 1 : 1,
-        "api": `/${this.pageName}/${this.newApiName}`,
+        "api" : this.newApiName,
         "fields": [
           {
             "name": "",
