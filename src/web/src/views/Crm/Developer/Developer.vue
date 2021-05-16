@@ -107,9 +107,6 @@ export default {
 		loadApis() {
 			api.get("/api/get-all")
 			.then((response) => {
-        response.data.apis.forEach(e => {
-          return e.fields = JSON.parse(e.fields)
-        });
 				this.apis = response.data.apis;
 			})
 		},

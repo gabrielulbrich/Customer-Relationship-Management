@@ -12,4 +12,7 @@ class Api extends Model
 
     protected $fillable = ['page_id', 'api', 'fields', 'weight'];
 
+    protected $casts = [
+        'fields' => 'json',
+    ];
 }

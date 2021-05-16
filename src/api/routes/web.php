@@ -47,6 +47,8 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->get('api/get-all', 'ApiController@select');
     $router->post('api/store-api', 'ApiController@storeApi');
     $router->delete('api/delete-api', 'ApiController@deleteApi');
+
+    $router->get('data/get-all', 'DataController@select');
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {

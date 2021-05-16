@@ -15,7 +15,7 @@ use  App\Api;
 class ApiController extends Controller
 {
 
-    public  function select() {
+    public function select() {
         $user = User::find(Auth::id());
         $page_user = $user->page()->first();
 
@@ -108,9 +108,14 @@ class ApiController extends Controller
         }
         $this->validate($request, $validation);
 
+        if (empty($values)) {
+            dd('erro');
+        }
+
         try {
             $data = new Data;
             $data->api_id = $api->id;
+            $data->page_id = $page->id;
             $data->data = json_encode($values);
             $data->save();
         } catch (\Exception $e) {
