@@ -3,7 +3,7 @@
     <Toast position="bottom-right" />
 		<div class="p-col-12">
 			<div class="card">
-				<h5>Dados Salvos</h5>
+			<h5>Dados Salvos</h5>
 				<Accordion>
           <div v-for="(value, index) in data" :key="index">
             <AccordionTab>
@@ -23,11 +23,27 @@
 						      </div>
 					      </template>
                 <Column v-for="col of columns[value.api]" :field="col.field" :header="col.header" :key="col.field"></Column>
+				        <Column field="delete" header="Ação">
+                  <template #body="slotProps">
+                    <Button icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2 p-mb-2" @click.prevent="confirmDeleteData(slotProps.data)" />
+                  </template>
+                </Column>
               </DataTable>
             </AccordionTab>
           </div>
 				</Accordion>
 			</div>
+
+      <Dialog :visible.sync="deleteDataDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+        <div class="confirmation-content">
+          <i class="pi pi-exclamation-triangle p-mr-3" style="font-size: 2rem" />
+          <span v-if="data">Tem certeza que deseja deletar o campo <b>{{ value.id }}</b>?</span>
+        </div>
+        <template #footer>
+          <Button label="No" icon="pi pi-times" class="p-button-text" @click="deleteDataDialog = false"/>
+          <Button label="Yes" icon="pi pi-check" class="p-button-text" @click="deleteData" />
+        </template>
+      </Dialog>
     </div>
 	</div>
 </template>
@@ -42,14 +58,10 @@ export default {
       data: [],
       filters1: {},
       errors: [],
-      columns: [
-        // {
-        //   field: 'data.abc', 
-        //   header: 'Code'
-        // },
-        // {field: 'data.abcd', header: 'Name'},
-        // {field: 'data.abcde', header: 'Category'},
-      ]
+      columns: [],
+      deleteDataDialog: false,
+      value: [],
+      valueId: ""
     }
 	},
 	created() {
@@ -61,12 +73,23 @@ export default {
 		async loadData() {
 			await api.get("/data/get-all")
 			.then((response) => {
+        this.data = [];
 				this.data = response.data.data;
         this.columns = response.data.columns;
-        console.log(this.data)
-        console.log(this.columns);
 			})
 		},
+    confirmDeleteData(value) {
+			this.value = value;
+			this.deleteDataDialog = true;
+		},
+    async deleteData() {
+      await api.delete(`/data/delete?id=${this.value.id}`)
+			.then((response) => {
+        this.$toast.add({severity:'success', summary: 'Sucesso', detail: `Deletado com sucesso.`, life: 3000});
+        this.deleteDataDialog = false;
+        this.loadData();
+			})
+    },
 	},
   computed: {
     ...mapGetters([

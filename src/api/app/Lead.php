@@ -10,23 +10,15 @@ class Lead extends Model
 {
     use Authenticatable, Authorizable;
 
-//    /**
-//     * The attributes that are mass assignable.
-//     *
-//     * @var array
-//     */
-//    protected $fillable = [
-//        'name', 'site'
-//    ];
-//
-//    /**
-//     * The attributes excluded from the model's JSON form.
-//     *
-//     * @var array
-//     */
     protected $hidden = [
         'priority_id', 'status_id', 'user_id'
     ];
+
+    protected $casts = [
+        'data' => 'json',
+    ];
+
+    protected $filable = ['api_id', 'data'];
 
     public function priority()
     {
@@ -41,6 +33,11 @@ class Lead extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function api()
+    {
+        return $this->belongsTo('App\Api');
     }
 
     public function comments(){

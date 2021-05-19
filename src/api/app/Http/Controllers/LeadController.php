@@ -8,6 +8,7 @@ use App\User;
 use App\Lead;
 use App\Priority;
 use App\Status;
+use App\Api;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,14 +25,13 @@ class LeadController extends Controller
         $priorities = Priority::all('id as code', 'priority as name');
 
         foreach($leadsFromUserPage as $lead){
-            $lead->summary = $page_user->epic.' - '.$lead->name.' - '.$lead->id;
+            $lead->summary = $page_user->epic.'/'.$lead->api->api;
             $lead->priority->code = $lead->priority->id;
             $lead->priority->name = $lead->priority->priority;
             $lead->priority_icon = $lead->priority->icon_url;
             $lead->status->code = $lead->status->id;
             $lead->status->name = $lead->status->status;
             $lead->user;
-//            $lead->user->code = $lead->user->id;
             $lead->avatar_url = $lead->user->avatar_url;
             $lead->created = $lead->created_at->format('d M');
         }
@@ -51,14 +51,13 @@ class LeadController extends Controller
                     ->where('id', $leadId)
                     ->get()
                     ->first();
-        $anotherLeads = Lead::select('id','name', 'priority_id', 'status_id', 'user_id', 'created_at', 'updated_at')
+        $anotherLeads = Lead::select('id', 'priority_id', 'status_id', 'user_id','api_id', 'created_at', 'updated_at')
                     ->where('page_id', $page_user->id )
-                    ->where('email', $leadById->email)
                     ->where('id', '<>', $leadId)
                     ->get();
 
         foreach ($anotherLeads as $other) {
-            $other->summary = $page_user->epic.' - '.$other->name.' - '.$other->id;
+            $other->summary = $page_user->epic.'/'.$other->api->api;
             $other->created = $other->created_at->format('d M Y');
             $other->priority->code = $other->priority->id;
             $other->priority->name = $other->priority->priority;
@@ -72,7 +71,7 @@ class LeadController extends Controller
         $status = Status::all('id as code', 'status as name');
         $priorities = Priority::all('id as code', 'priority as name', 'icon_url');
 
-        $leadById->summary = $page_user->epic.' - '.$leadById->name.' - '.$leadById->id;
+        $leadById->summary = $page_user->epic;
         $leadById->priority->code = $leadById->priority->id;
         $leadById->priority->name = $leadById->priority->priority;
         $leadById->priority_icon = $leadById->priority->icon_url;
@@ -82,10 +81,10 @@ class LeadController extends Controller
         $leadById->avatar_url = $leadById->user->avatar_url;
         $leadById->created = $leadById->created_at->format('d M');
         $leadById->comments;
-        foreach ($leadById->comments as $history){
-            $history->user = User::find($history->user_id);
-            $history->created = $history->created_at->format('d M Y');
-            $history->avatar_url = $history->user->avatar_url;
+        foreach ($leadById->comments as $comment){
+            $comment->user = User::find($comment->user_id);
+            $comment->created = $comment->created_at->format('d M Y');
+            $comment->avatar_url = $comment->user->avatar_url;
         }
 
         return response()->json([
@@ -109,16 +108,16 @@ class LeadController extends Controller
         }
 
         try{
-            $history = new Comment;
-            $history->user_id = $request->input('user_id');
-            $history->comment = $request->input('comment');
-            $history->save();
-            $history->lead()->attach([$request->input('lead_id')]);
-            $history->user = User::find(Auth::id());
-            $history->created = $history->created_at->format('d M Y');
-            $history->avatar_url = $history->user->avatar_url;
+            $comment = new Comment;
+            $comment->user_id = $request->input('user_id');
+            $comment->comment = $request->input('comment');
+            $comment->save();
+            $comment->lead()->attach([$request->input('lead_id')]);
+            $comment->user = User::find(Auth::id());
+            $comment->created = $comment->created_at->format('d M Y');
+            $comment->avatar_url = $comment->user->avatar_url;
 
-            return response()->json($history, 201);
+            return response()->json($comment, 201);
         } catch (\Exception $e) {
             return response()->json( [
                 'errors' => [
@@ -243,15 +242,14 @@ class LeadController extends Controller
         $newLeads = Lead::where('page_id', $page_user->id)->where('status_id', 1)->count();
         $closedLeads = Lead::where('page_id', $page_user->id)->where('status_id', 4)->count();
 
-        $activity = Lead::where('page_id', $page_user->id)->where('user_id', Auth::id())->select('id', 'name', 'priority_id')->get();
+        $activity = Lead::where('page_id', $page_user->id)->where('user_id', Auth::id())->select('id', 'api_id', 'priority_id')->get();
         foreach($activity as $ac) {
-            $ac->summary = $page_user->epic . ' - ' . $ac->name . ' - ' . $ac->id;
+            $ac->summary = $page_user->epic.'/'.$ac->api->api;
             $ac->priority;
             $ac->priority->code = $ac->priority->id;
             $ac->priority->name = $ac->priority->priority;
             $ac->priority_icon = $ac->priority->icon_url;
         }
-
 
         return response()->json([
             'report' => [
@@ -261,6 +259,46 @@ class LeadController extends Controller
                 'closedLeads' => $closedLeads,
             ],
             'activity' => $activity
+        ]);
+    }
+
+    /**
+     * Store a new user.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteData(Request $request) {
+        $dataValidation = [
+            'id' => 'required|numeric',
+        ];
+        $this->validate($request, $dataValidation);
+
+        $data = Lead::find($request->input('id'));
+        $data->delete();
+
+        return response()->json($data, 200);
+    }
+
+    public function getAllData() {
+        $user = User::find(Auth::id());
+        $page_user = $user->page()->first();
+        $columns = [];
+
+        $data = Api::where('page_id', $page_user->id)->get();
+        foreach ($data as $value) {
+            $value->data = Lead::where('api_id', $value->id)->get();
+            foreach ($value->fields as $field) {
+                $columns[$value->api][] = array(
+                    'field' => 'data.'.$field['name'],
+                    'header' => $field['description']
+                );
+            }
+        }
+
+        return response()->json([
+            'data' =>  $data,
+            'columns' => $columns
         ]);
     }
 }
