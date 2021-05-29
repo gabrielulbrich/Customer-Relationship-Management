@@ -51,10 +51,13 @@ class LeadController extends Controller
                     ->where('id', $leadId)
                     ->get()
                     ->first();
+                
         $anotherLeads = Lead::select('id', 'priority_id', 'status_id', 'user_id','api_id', 'created_at', 'updated_at')
                     ->where('page_id', $page_user->id )
                     ->where('id', '<>', $leadId)
                     ->get();
+
+        $fields = Api::find($leadById->api_id)->get()->first();
 
         foreach ($anotherLeads as $other) {
             $other->summary = $page_user->epic.'/'.$other->api->api;
@@ -64,8 +67,10 @@ class LeadController extends Controller
             $other->priority_icon = $other->priority->icon_url;
             $other->status->code = $other->status->id;
             $other->status->name = $other->status->status;
-            $other->user;
-            $other->user->avatar = $other->user->avatar_url;
+            if (!empty($other->user)) {
+                $other->user;
+                $other->user->avatar = $other->user->avatar_url;
+            }
         }
 
         $status = Status::all('id as code', 'status as name');
@@ -77,10 +82,22 @@ class LeadController extends Controller
         $leadById->priority_icon = $leadById->priority->icon_url;
         $leadById->status->code = $leadById->status->id;
         $leadById->status->name = $leadById->status->status;
-        $leadById->user;
-        $leadById->avatar_url = $leadById->user->avatar_url;
+        if (!empty($other->user)) {
+            $leadById->user;
+            $leadById->avatar_url = $leadById->user->avatar_url;
+        }
         $leadById->created = $leadById->created_at->format('d M');
         $leadById->comments;
+
+        
+        foreach ($fields->fields as $field) {
+          $columns[] = array(
+            'field' => 'data.'.$field['name'],
+            'header' => $field['description']
+          );
+        }
+        $leadById->columns = $columns;
+
         foreach ($leadById->comments as $comment){
             $comment->user = User::find($comment->user_id);
             $comment->created = $comment->created_at->format('d M Y');
@@ -241,8 +258,8 @@ class LeadController extends Controller
         $last7days = Lead::where('page_id', $page_user->id)->whereDate('created_at','>=',$oneWeekAgo)->count();
         $newLeads = Lead::where('page_id', $page_user->id)->where('status_id', 1)->count();
         $closedLeads = Lead::where('page_id', $page_user->id)->where('status_id', 4)->count();
-
         $activity = Lead::where('page_id', $page_user->id)->where('user_id', Auth::id())->select('id', 'api_id', 'priority_id')->get();
+
         foreach($activity as $ac) {
             $ac->summary = $page_user->epic.'/'.$ac->api->api;
             $ac->priority;
@@ -275,6 +292,7 @@ class LeadController extends Controller
         $this->validate($request, $dataValidation);
 
         $data = Lead::find($request->input('id'));
+        $data->comments()->detach();
         $data->delete();
 
         return response()->json($data, 200);

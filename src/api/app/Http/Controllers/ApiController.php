@@ -11,9 +11,13 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use  App\User;
 use  App\Api;
+use  App\Lead;
 
 class ApiController extends Controller
 {
+
+    const EM_ABERTO = 1;
+    const BAIXA_PRIORIDADE = 1;
 
     public function select() {
         $user = User::find(Auth::id());
@@ -94,14 +98,14 @@ class ApiController extends Controller
             dd('empty');
         }
 
-        $fields = json_decode($api->fields);
+        $fields = $api->fields;
         $validation = array();
         $values = array();
         
         foreach($request->all() as $key => $value) {
             foreach ($fields as $field) {
-                if ($key == $field->name ) {
-                    $validation[$key] = $field->type->code;
+                if ($key == $field['name'] ) {
+                    $validation[$key] = $field['type']['code'];
                     $values[$key] = $value;
                 }
             }
@@ -113,11 +117,15 @@ class ApiController extends Controller
         }
 
         try {
-            $data = new Data;
-            $data->api_id = $api->id;
-            $data->page_id = $page->id;
-            $data->data = json_encode($values);
-            $data->save();
+            $lead = new Lead;
+            $lead->api_id = $api->id;
+            $lead->status_id = ApiController::EM_ABERTO;
+            $lead->priority_id = ApiController::BAIXA_PRIORIDADE;
+            $lead->user_id = null;
+            $lead->page_id = $page->id;
+            $lead->data = $values;
+            $lead->origem = null;
+            $lead->save();
         } catch (\Exception $e) {
             //return error message
             return response()->json([
@@ -127,6 +135,6 @@ class ApiController extends Controller
             ], 409);
         }
 
-        return $data;
+        return $lead;
     }
 }
