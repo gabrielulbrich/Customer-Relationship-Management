@@ -31,8 +31,10 @@ class LeadController extends Controller
             $lead->priority_icon = $lead->priority->icon_url;
             $lead->status->code = $lead->status->id;
             $lead->status->name = $lead->status->status;
-            $lead->user;
-            $lead->avatar_url = $lead->user->avatar_url;
+            if (!empty($lead->user)) {
+              $lead->user;
+              $lead->avatar_url = $lead->user->avatar_url;
+            }
             $lead->created = $lead->created_at->format('d M');
         }
         return response()->json([
@@ -92,8 +94,7 @@ class LeadController extends Controller
         
         foreach ($fields->fields as $field) {
           $columns[] = array(
-            'field' => 'data.'.$field['name'],
-            'header' => $field['description']
+            'field' => $field['name'],
           );
         }
         $leadById->columns = $columns;

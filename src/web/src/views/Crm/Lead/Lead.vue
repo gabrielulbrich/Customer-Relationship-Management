@@ -95,7 +95,14 @@
 						</div>
 					</template>
 				</Carousel>
-			</div>	
+				<div class="card p-mt-4">
+					<h2 class="title">Dados</h2>
+					<div v-for="(column, index) in lead.columns" :key="index">
+						<strong><p class="p-mb-0">{{column.field}}</p></strong>
+						<Textarea class="p-col-12 p-mb-3" type="text" rows="2" :placeholder="lead.data[column.field]" :disabled="true"></Textarea>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
