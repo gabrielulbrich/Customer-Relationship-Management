@@ -41,7 +41,7 @@
                     <small class="p-invalid" v-if="errors.length && errors[0].cpf">{{errors[0].cpf[0]}}</small>
                 </div>
                 <div class="p-field">
-                    <InputText id="site_name" type="site_name" placeholder="informe o site" v-model="new_account.site_name" :class="{'p-invalid': errors.length && errors[0].site_name}" aria-describedby="usersite_name-help"/>
+                    <InputText id="site_name" type="site_name" placeholder="informe o site" v-model="new_account.site_name" :class="{'p-invalid': errors.length && errors[0].site_name}" v-tooltip="'Insira o domínio do site de campanha. Exemplo: site.com.br'" aria-describedby="usersite_name-help"/>
                     <small class="p-invalid" v-if="errors.length && errors[0].site_name">{{ errors[0].site_name[0] }}</small>
                 </div>
                 <div class="p-field">

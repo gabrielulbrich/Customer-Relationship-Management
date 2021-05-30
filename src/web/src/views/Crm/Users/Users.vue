@@ -29,6 +29,11 @@
 					</Column>
 					<Column field="name" header="Nome" sortable></Column>
 					<Column field="email" header="Email" sortable></Column>
+					<Column header="Perfil" sortable>
+						<template #body="slotProps">
+							<p class="p-tag">{{slotProps.data.profile.name}}</p>
+						</template>
+					</Column>
 					
 					<Column>
 						<template #body="slotProps">

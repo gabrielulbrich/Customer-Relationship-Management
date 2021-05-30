@@ -135,5 +135,6 @@ export default {
 	padding-bottom: 1rem;
 	border-radius: 4px;
 	min-height: 100vh;
+	min-width: 187px;
 }	
 </style>

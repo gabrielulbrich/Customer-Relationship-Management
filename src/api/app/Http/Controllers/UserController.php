@@ -17,6 +17,7 @@ class UserController extends Controller
         'email' => 'Digite um e-mail válido',
         'confirmed' => 'As senhas não coincidem',
         'password' => 'Senha atual errada.',
+        'exists' => 'O site informado não ainda não foi cadastrado no site. Entre em contato com um administrador.'
     ];
 
     public function view($id) {
@@ -64,19 +65,24 @@ class UserController extends Controller
         if ($request->has('password')){
             $dataValidation['current_password'] = 'password:api';
             $dataValidation['password'] = 'required|confirmed|max:255|min:6';
+            $this->validate($request, $dataValidation, $this->messages);
         } else if ($request->has('name')){
             $dataValidation['name'] = 'required|min:3|max:255';
+            $this->validate($request, $dataValidation, $this->messages);
         } else if ($request->has('email')){
             $dataValidation['email'] = 'unique:users|required|min:3|max:255|email:rfc,dns';
+            $this->validate($request, $dataValidation, $this->messages);
         }
 
-        $this->validate($request, $dataValidation, $this->messages);
         $user = User::find(Auth::id());
         $user->name = $request->has('name') ? $request->input('name') : $user->name;
         $user->email = $request->has('email') ? $request->input('email') : $user->email;
         $user->password = $request->has('password') ? app('hash')->make($request->input('password')) : $user->password;
+        $user->avatar_url = $request->has('avatar_url') ? $request->input('avatar_url') : $user->avatar_url;
 
         $user->update();
+        
+        $user->avatar = $user->avatar_url;
 
         return response()->json($user);
     }

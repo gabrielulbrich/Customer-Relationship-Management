@@ -37,16 +37,16 @@
 		</div>
 
 		<Dialog :visible.sync="editAvatarDialog" :style="{width: '450px'}" header="Editar avatar do usuário" :modal="true" class="p-fluid">
-			<Button class="p-link"><img src="/assets/user_icons/boy.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/boy-1.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/girl.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/girl-1.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/man.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/man-1.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/man-2.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/man-3.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/man-4.png" width="35" alt="avatar2"/></Button>
-			<Button class="p-link"><img src="/assets/user_icons/user.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/boy.png');" class="p-link"><img src="/assets/user_icons/boy.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/boy-1.png');" class="p-link"><img src="/assets/user_icons/boy-1.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/girl.png');" class="p-link"><img src="/assets/user_icons/girl.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/girl-1.png');"  class="p-link"><img src="/assets/user_icons/girl-1.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/man.png');"  class="p-link"><img src="/assets/user_icons/man.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/man-1.png');"  class="p-link"><img src="/assets/user_icons/man-1.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/man-2.png');"  class="p-link"><img src="/assets/user_icons/man-2.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/man-3.png');"  class="p-link"><img src="/assets/user_icons/man-3.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/man-4.png');"  class="p-link"><img src="/assets/user_icons/man-4.png" width="35" alt="avatar2"/></Button>
+			<Button @click.prevent="setAvatar('/assets/user_icons/user.png');"  class="p-link"><img src="/assets/user_icons/user.png" width="35" alt="avatar2"/></Button>
 
 			<small class="p-invalid" v-if="errors.length && errors[0].avatar">{{errors[0].avatar[0]}}</small>
 
@@ -120,6 +120,7 @@ export default {
 					password_confirmation: null,
 				}
 			},
+			newAvatar: "",
 			errors: [],
 			submitted: false,
 			editAvatarDialog: false,
@@ -156,13 +157,14 @@ export default {
 			this.editNameDialog = false;
 			this.editEmailDialog = false;
 			this.editPasswordDialog = false;
+			this.editAvatarDialog = false;
 			this.submitted = false;
 		},
 		updateUser(dialog){
 			this.submitted = true
 			switch (dialog) {
 				case 'avatar':
-					this.update({ avatar_url: this.user.avatar })
+					this.update({ avatar_url: this.newAvatar })
 					break;
 				case 'name':
 					this.update({name: this.user.name })
@@ -185,6 +187,9 @@ export default {
 			} catch(error){
 				this.errors.push(error.response.data)
 			}
+		},
+		setAvatar(avatar) {
+			this.newAvatar = avatar;
 		}
 	},
 	computed: {
