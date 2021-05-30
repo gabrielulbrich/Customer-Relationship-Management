@@ -1,22 +1,21 @@
 <template>
 	<div>
 		<div class="p-grid headers">
-			<div class="p-col">
+			<div class="p-col header">
 				<div class="box">ABERTO</div>
 			</div>
-			<div class="p-col">
+			<div class="p-col header">
 				<div class="box">EM PROGRESSO</div>
 			</div>
-			<div class="p-col">
+			<div class="p-col header">
 				<div class="box">BLOQUEADO</div>
 			</div>
-			<div class="p-col">
+			<div class="p-col header">
 				<div class="box">FINALIZADO</div>
 			</div>
 		</div>
-		<div class="p-grid">
-			<div class="p-col">
-				<div class="swimlane">
+		<div class="p-grid swimlanes">
+			<div class="p-col swimlane">
 					<div v-if="leads && leads.length" class="leads" key="leads">
 						<div class="lead" v-for="(lead, index) in leads" :key="index">
 							<div v-if="lead.status.code == 1">
@@ -24,10 +23,8 @@
 							</div>
 						</div>
 					</div>
-				</div>
 			</div>
-			<div class="p-col">
-				<div class="swimlane">
+			<div class="p-col swimlane">
 					<div v-if="leads && leads.length" class="leads" key="leads">
 						<div class="lead" v-for="(lead, index) in leads" :key="index">
 							<div v-if="lead.status.code == 2">
@@ -35,29 +32,24 @@
 							</div>
 						</div>
 					</div>
+			</div>
+			<div class="p-col swimlane">
+        <div v-if="leads && leads.length" class="leads" key="leads">
+          <div class="lead" v-for="(lead, index) in leads" :key="index">
+            <div v-if="lead.status.code == 3">
+              <CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
+            </div>
+          </div>
 				</div>
 			</div>
-			<div class="p-col">
-				<div class="swimlane">
-					<div v-if="leads && leads.length" class="leads" key="leads">
-						<div class="lead" v-for="(lead, index) in leads" :key="index">
-							<div v-if="lead.status.code == 3">
-								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="p-col">
-				<div class="swimlane">
-					<div v-if="leads && leads.length" class="leads" key="leads">
-						<div class="lead" v-for="(lead, index) in leads" :key="index">
-							<div v-if="lead.status.code == 4">
-								<CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="p-col swimlane">
+        <div v-if="leads && leads.length" class="leads" key="leads">
+          <div class="lead" v-for="(lead, index) in leads" :key="index">
+            <div v-if="lead.status.code == 4">
+              <CardLead :lead="lead" @click.native="toggleMenuDetail(lead)"/>
+            </div>
+          </div>
+        </div>
 			</div>
 		</div>
 
@@ -127,14 +119,30 @@ export default {
 		border-radius: 4px;
 		font-weight: 600;
 	}
+
+  .header {
+	  min-width: 187px;
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+  }
 }
-.swimlane {
-	background-color: #ffffff;
-	text-align: center;
-	padding-top: 0.5rem;
-	padding-bottom: 1rem;
-	border-radius: 4px;
-	min-height: 100vh;
-	min-width: 187px;
-}	
+
+.swimlanes {
+  .swimlane {
+    background-color: #ffffff;
+    text-align: center;
+    border-radius: 4px;
+    min-width: 187px;
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+    padding: 0;
+  }
+}
+
+.headers,
+.swimlanes {
+  flex-wrap: nowrap;
+}
+
+.layout-main {
+	overflow: scroll;
+}
 </style>
