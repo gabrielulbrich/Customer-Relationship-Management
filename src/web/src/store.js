@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { api } from "@/services.js";
+import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -24,6 +25,7 @@ const store = new Vuex.Store({
       notification: [{}]
     },
   },
+  plugins: [createPersistedState()],
   getters: {
     pageName: state => {
       return state.page.site.split('.')[0]
