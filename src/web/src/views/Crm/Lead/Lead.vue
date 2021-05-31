@@ -24,7 +24,14 @@
             <div>
               <Dropdown v-model="lead.status" :options="conditionValues" optionLabel="name" placeholder="Condição" @change="changeStatus($event, lead)" />
               <Dropdown v-model="lead.priority" :options="priorityValues" optionLabel="name" placeholder="Prioridade" @change="changePriority($event, lead)" />
-              <AutoComplete v-model="lead.user" placeholder="Atribuir à" id="dd" :dropdown="true" :multiple="false" field="name" :suggestions="filteredUser" @complete="searchUser($event)" @item-select="changeUser($event, lead)" />
+              <AutoComplete v-model="lead.user" placeholder="Atribuir à" id="dd" :dropdown="true" :multiple="false" field="name" :suggestions="filteredUser" @complete="searchUser($event)" @item-select="changeUser($event, lead)" >
+                <template #item="slotProps">
+                  <div class="user-item">
+                    <img class="icon" :src="slotProps.item.avatar_url" />
+                    <div class="p-ml-3">{{slotProps.item.name}}</div>
+                  </div>
+                </template>
+              </AutoComplete>
             </div>
             <ul v-if="Object.keys(this.lead).length > 0" class="details-two-cols">
               <li class="details-item right">
@@ -282,5 +289,14 @@ export default {
 .p-inplace {
   font-weight: 500;
   font-size: 22px;
+}
+ 
+.user-item {
+  display: flex;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
 </style>

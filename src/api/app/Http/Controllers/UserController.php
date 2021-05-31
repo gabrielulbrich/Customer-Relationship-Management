@@ -29,13 +29,16 @@ class UserController extends Controller
     {
         if (!empty($request->input('username'))){
             $user = User::find(Auth::id());
-            $users = $user->users()->select( 'id','name','email', 'avatar_url' )
+            $users = $user->users()->select( 'id','name','email', 'avatar_url', 'profile_id' )
                 ->where( "name", "LIKE", "%{$request->input('username')}%" )
+                ->where("profile_id", "!=", [3,4,5])
                 ->limit('20')
                 ->get();
+                
         }else {
             $user = User::find(Auth::id());
-            $users = $user->users()->select( 'id','name','email', 'avatar_url' )
+            $users = $user->users()->select( 'id','name','email', 'avatar_url', 'profile_id' )
+                ->where("profile_id", "!=", [3,4,5])
                 ->limit('20')
                 ->get();
         }

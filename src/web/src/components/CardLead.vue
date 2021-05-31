@@ -3,11 +3,10 @@
         <div class="issue-content">
             <div class="issue-key">
                 <router-link class="lead-page" :to="{name: 'lead', params: {id: lead.id}}">
-                    <span>#{{ lead.id }}</span>
+                <span>{{ lead.summary }} #{{ lead.id }}</span>
                 </router-link>
             </div>
             <div class="issue-subject">
-                <span>{{ lead.summary }}</span>
             </div>
             <div class="issue-date">
                 <span>{{ lead.created }}</span>

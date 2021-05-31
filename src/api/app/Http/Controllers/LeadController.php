@@ -25,7 +25,9 @@ class LeadController extends Controller
         $priorities = Priority::all('id as code', 'priority as name');
 
         foreach($leadsFromUserPage as $lead){
-            $lead->summary = $page_user->epic.'/'.$lead->api->api;
+            if (empty($lead->summary)) {
+                $lead->summary = 'Novo Lead';
+            }
             $lead->priority->code = $lead->priority->id;
             $lead->priority->name = $lead->priority->priority;
             $lead->priority_icon = $lead->priority->icon_url;
@@ -62,7 +64,9 @@ class LeadController extends Controller
         $fields = Api::find($leadById->api_id)->get()->first();
 
         foreach ($anotherLeads as $other) {
-            $other->summary = $page_user->epic.'/'.$other->api->api;
+            if (empty($other->summary)) {
+                $other->summary = 'Novo Lead';
+            }
             $other->created = $other->created_at->format('d M Y');
             $other->priority->code = $other->priority->id;
             $other->priority->name = $other->priority->priority;
@@ -290,7 +294,9 @@ class LeadController extends Controller
         $activity = Lead::where('page_id', $page_user->id)->where('user_id', Auth::id())->select('id', 'api_id', 'priority_id')->get();
 
         foreach($activity as $ac) {
-            $ac->summary = $page_user->epic.'/'.$ac->api->api;
+            if (empty($ac->summary)) {
+                $ac->summary = 'Novo Lead';
+            }
             $ac->priority;
             $ac->priority->code = $ac->priority->id;
             $ac->priority->name = $ac->priority->priority;
