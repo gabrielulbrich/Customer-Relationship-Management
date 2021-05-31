@@ -22,11 +22,6 @@
 						</div>
 					</template>
 
-					<Column headerStyle="width: 8rem">
-						<template #body="slotProps">
-							<img :src="slotProps.data.logo_url" alt="Avatar" class="product-image" />
-						</template>
-					</Column>
 					<Column field="name" header="Nome da página" sortable></Column>
 					<Column field="site" header="Site" sortable></Column>
 					<Column field="epic" header="EPIC" sortable></Column>

@@ -78,7 +78,9 @@ class LeadController extends Controller
         $status = Status::all('id as code', 'status as name');
         $priorities = Priority::all('id as code', 'priority as name', 'icon_url');
 
-        $leadById->summary = $page_user->epic;
+        if (empty($leadById->summary)) {
+            $leadById->summary = 'Novo Lead';
+        }
         $leadById->priority->code = $leadById->priority->id;
         $leadById->priority->name = $leadById->priority->priority;
         $leadById->priority_icon = $leadById->priority->icon_url;
@@ -136,6 +138,32 @@ class LeadController extends Controller
             $comment->avatar_url = $comment->user->avatar_url;
 
             return response()->json($comment, 201);
+        } catch (\Exception $e) {
+            return response()->json( [
+                'errors' => [
+                    'message' => 'Erro ao salvar comentário.'
+                ],
+            ], 409);
+        }
+    }
+
+    //todo: verificar o perfil do usuário
+    public function submitSummary(Request $request){
+        $validator = Validator::make($request->all(), [
+            'lead_id' => 'required|numeric',
+            'summary' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+
+        try{
+            $lead = Lead::find($request->input('lead_id'));
+            $lead->summary = $request->input('summary');
+            $lead->save();
+
+            return response()->json($lead, 201);
         } catch (\Exception $e) {
             return response()->json( [
                 'errors' => [

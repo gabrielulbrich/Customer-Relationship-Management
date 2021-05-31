@@ -35,6 +35,7 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
     $router->put('lead/priority', 'LeadController@updatePriority');
     $router->put('lead/user', 'LeadController@updateUser');
     $router->post('lead/comment', 'LeadController@submitCommentLead');
+    $router->post('lead/summary', 'LeadController@submitSummary');
 
     $router->get('pages', 'PageController@getAllPages'); //ONLY MASTER
     $router->post('page/create', 'PageController@store'); //ONLY MASTER

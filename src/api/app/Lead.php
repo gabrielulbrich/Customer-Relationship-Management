@@ -18,7 +18,7 @@ class Lead extends Model
         'data' => 'json',
     ];
 
-    protected $filable = ['api_id', 'data'];
+    protected $filable = ['api_id', 'data', 'summary'];
 
     public function priority()
     {

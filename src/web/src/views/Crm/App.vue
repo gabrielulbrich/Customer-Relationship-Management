@@ -6,7 +6,7 @@
             <div :class="sidebarClass" @click="onSidebarClick" v-show="isSidebarVisible()">
                 <div class="layout-logo">
                     <router-link to="/">
-                        <img alt="Logo" :src="logo" />
+                        <h4 class="p-mb-0 p-text-uppercase white"><strong>{{site}}</strong></h4>
                     </router-link>
                 </div>
 
@@ -143,6 +143,7 @@ export default {
           'isMaster',
           'isUser',
           'isAnonymous',
+          'site'
         ]),
         containerClass() {
             return ['layout-wrapper', {
@@ -161,9 +162,6 @@ export default {
                 'layout-sidebar-light': this.layoutColorMode === 'light'
             }];
         },
-        logo() {
-            return (this.layoutColorMode === 'dark') ? "assets/layout/images/logo-white.svg" : "assets/layout/images/logo.svg";
-        }
     },
     beforeUpdate() {
         if (this.mobileMenuActive)
@@ -182,4 +180,8 @@ export default {
 
 <style lang="scss">
 @import '@/App.scss';
+
+.white {
+  color: #FFF;
+}
 </style>

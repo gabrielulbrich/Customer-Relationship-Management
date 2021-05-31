@@ -30,6 +30,9 @@ const store = new Vuex.Store({
     pageName: state => {
       return state.page.site.split('.')[0]
     },
+    site: state => {
+      return state.page.site
+    },
     isAdmin: state => {
       return state.user.profile.code == 1
     },
