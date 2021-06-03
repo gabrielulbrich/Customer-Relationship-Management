@@ -24,7 +24,7 @@
             <div>
               <Dropdown v-model="lead.status" :options="conditionValues" optionLabel="name" placeholder="Condição" @change="changeStatus($event, lead)" />
               <Dropdown v-model="lead.priority" :options="priorityValues" optionLabel="name" placeholder="Prioridade" @change="changePriority($event, lead)" />
-              <AutoComplete v-model="lead.user" placeholder="Atribuir à" id="dd" :dropdown="true" :multiple="false" field="name" :suggestions="filteredUser" @complete="searchUser($event)" @item-select="changeUser($event, lead)" >
+              <AutoComplete v-model="newUser" placeholder="Atribuir à" id="dd" :dropdown="true" :multiple="false" field="name" :suggestions="filteredUser" @complete="searchUser($event)" @item-select="changeUser($event, lead)" >
                 <template #item="slotProps">
                   <div class="user-item">
                     <img class="icon" :src="slotProps.item.avatar_url" />
@@ -135,7 +135,8 @@ export default {
       usersValue: [],
       errors: [],
       comment: null,
-      newSummary: ""
+      newSummary: "",
+      newUser: "",
     }
   },
   watch: {

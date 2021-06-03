@@ -201,6 +201,8 @@ class LeadController extends Controller
             $lead->status->code = $lead->status->id;
             $lead->status->name = $lead->status->status;
 
+            $lead->makeHidden(['summary', 'data']);
+
             return response()->json($lead);
         } catch (\Exception $e) {
             return response()->json( [
@@ -235,6 +237,7 @@ class LeadController extends Controller
             $lead->priority->name = $lead->priority->priority;
             $lead->priority_icon = $lead->priority->icon_url;
 
+            $lead->makeHidden(['summary']);
 
             return response()->json($lead);
         } catch (\Exception $e) {
@@ -269,6 +272,7 @@ class LeadController extends Controller
             $lead->user;
             $lead->avatar_url = $lead->user->avatar_url;
 
+            $lead->makeHidden(['summary']);
 
             return response()->json($lead);
         } catch (\Exception $e) {
