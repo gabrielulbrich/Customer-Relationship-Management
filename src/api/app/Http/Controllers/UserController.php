@@ -136,6 +136,7 @@ class UserController extends Controller
             $user->save();
             $user->page()->attach([$page_user->id], ['profile_id' => $request->input('profile')['code']]);
             $user->avatar = $user->avatar_url;
+            $user->profile = $user->profile()->first();
 
             return response()->json($user, 201);
 

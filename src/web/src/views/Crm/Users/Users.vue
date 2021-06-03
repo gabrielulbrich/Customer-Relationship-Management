@@ -62,8 +62,8 @@
                         <small class="p-invalid" v-if="errors.length && errors[0].profile">{{errors[0].profile[0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="password" placeholder="senha" type="password" :class="{'p-invalid': errors.length && errors[0].password}" aria-describedby="password-help" v-model="user.password"/>
-                    </div>
+						<Password  id="password" weakLabel="Senha Fraca" mediumLabel="Senha Média" strongLabel="Senha Forte" showIcon="pi pi-check" type="password" placeholder="informe sua senha" :class="{'p-invalid': errors.length && errors[0].password}" v-model="user.password" />
+					</div>
                     <div class="p-field">
                         <InputText id="password_confirmation" placeholder="confirme sua senha" type="password"  :class="{'p-invalid': errors.length && errors[0].password}" aria-describedby="password_confirmation-help" v-model="user.password_confirmation"/>
                         <small class="p-invalid" v-if="errors.length && errors[0].password">{{errors[0].password[0]}}</small>

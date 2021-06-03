@@ -45,7 +45,7 @@
                     <small class="p-invalid" v-if="errors.length && errors[0].site_name">{{ errors[0].site_name[0] }}</small>
                 </div>
                 <div class="p-field">
-                    <InputText id="password" type="password" placeholder="informe sua senha" :class="{'p-invalid': errors.length && errors[0].password}" v-model="new_account.password" />
+                    <Password  id="password" weakLabel="Senha Fraca" mediumLabel="Senha Média" strongLabel="Senha Forte" showIcon="pi pi-check" type="password" placeholder="informe sua senha" :class="{'p-invalid': errors.length && errors[0].password}" v-model="new_account.password" />
                     <small class="p-invalid" v-if="errors.length && errors[0].password">{{ errors[0].password[0] }}</small>
                 </div>
                 <div class="p-field">
