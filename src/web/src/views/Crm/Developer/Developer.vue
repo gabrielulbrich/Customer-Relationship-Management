@@ -94,6 +94,7 @@ export default {
       typeValues: [
           {name: 'Texto', code: 'string'},
 					{name: 'Numérico', code: 'numeric'},
+          {name: 'Checkbox', code: 'boolean'}
       ],
 			errors: [],
 		}

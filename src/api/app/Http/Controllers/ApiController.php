@@ -45,7 +45,7 @@ class ApiController extends Controller
                     ['weight' => $api['weight'], 'page_id' => $page_user->id],
                     [
                         'api' => $api['api'],
-                        'fields' => json_encode($api['fields']),
+                        'fields' => $api['fields'],
                     ]
                 );
             }
