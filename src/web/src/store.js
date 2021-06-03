@@ -24,11 +24,15 @@ const store = new Vuex.Store({
       site: "",
       notification: [{}]
     },
+    token: localStorage.getItem('token'),
   },
   plugins: [createPersistedState()],
   getters: {
     pageName: state => {
       return state.page.site.split('.')[0]
+    },
+    isAuthenticated: state => {
+      return !!state.token
     },
     site: state => {
       return state.page.site
@@ -56,9 +60,6 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
-    UPDATE_LOGIN(state, payload) { 
-      state.authenticated = payload;
-    },
     UPDATE_USER(state, payload) {
       state.user = Object.assign(state.user, payload);
     },
@@ -83,7 +84,6 @@ const store = new Vuex.Store({
         context.commit("UPDATE_USER", response.data.user);
         context.commit("UPDATE_PAGE", response.data.page);
         context.commit("UPDATE_PROFILE", response.data.user.profile);
-        context.commit("UPDATE_LOGIN", true);
       })
     },
     me(context) {
@@ -92,7 +92,6 @@ const store = new Vuex.Store({
         context.commit("UPDATE_USER", response.data.user);
         context.commit("UPDATE_PAGE", response.data.page);
         context.commit("UPDATE_PROFILE", response.data.profile);
-        context.commit("UPDATE_LOGIN", true);
       });
     },
     updateUser(context, payload){
@@ -104,10 +103,17 @@ const store = new Vuex.Store({
     refreshToken(context){
       return api.get(`/refresh`)
       .then(response => {
-        context.commit("UPDATE_LOGIN", true);
         window.localStorage.token = `Bearer ${response.data.token}`;
       })
     },
+    logout(context) {
+      return new Promise((resolve, reject) => {
+        localStorage.removeItem('token')
+        // remove the axios default header
+        // delete axios.defaults.headers.common['Authorization']
+        resolve()
+      })
+    }
   }
 });
 

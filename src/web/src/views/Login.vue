@@ -101,6 +101,11 @@ export default {
       errors: []
     };
   },
+  created() {
+		if (window.localStorage.getItem('token')) {
+      this.$router.push('/dashboard')
+    }
+	},
   methods: {
     redirectToDashBoard() {
       this.$router.push({ path: this.$store.getters.pageName });

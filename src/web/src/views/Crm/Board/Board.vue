@@ -68,16 +68,16 @@ export default {
     MenuDetail,
     CardLead,
     },
-  data(){
-    return{
-      active: false,
-      selectedLead: null,
-      errors: [],
-      leads: null,
-      priorityValues: [],
-      conditionValues: []
-    }
-  },
+    data(){
+      return{
+        active: false,
+        selectedLead: null,
+        errors: [],
+        leads: null,
+        priorityValues: [],
+        conditionValues: []
+      }
+    },
     methods: {
         toggleMenuDetail(lead) {
       this.active = !this.active;
