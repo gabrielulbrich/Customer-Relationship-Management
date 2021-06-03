@@ -56,7 +56,7 @@
             <div class="p-grid">
               <div class="p-col-12">
                 <div v-for="(ac, index) in activity" :key="index">
-                  <router-link :to="'/'+$store.getters.pageName+'/lead/'+ac.id">{{ ac.summary }}<img :src="ac.priority_icon" alt="Icone prioridade"></router-link>
+                  <router-link :to="'/'+$store.getters.pageName+'/lead/'+ac.id">{{ ac.summary }} #{{ac.id}}<img :src="ac.priority_icon" alt="Icone prioridade"></router-link>
                 </div>
               </div>
             </div>

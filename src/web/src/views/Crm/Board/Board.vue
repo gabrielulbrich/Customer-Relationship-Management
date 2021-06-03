@@ -122,6 +122,7 @@ export default {
 
   .header {
     min-width: 187px;
+    max-width: 287px;
     margin: 0.5rem;
     padding: 0;
   }
@@ -133,6 +134,7 @@ export default {
     text-align: center;
     border-radius: 4px;
     min-width: 187px;
+    max-width: 287px;
     margin: 0.5rem 0.5rem 1rem 0.5rem;
     padding: 0;
   }
