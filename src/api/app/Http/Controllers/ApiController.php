@@ -121,7 +121,7 @@ class ApiController extends Controller
             $lead->api_id = $api->id;
             $lead->status_id = ApiController::EM_ABERTO;
             $lead->priority_id = ApiController::BAIXA_PRIORIDADE;
-            $lead->user_id = null;
+            $lead->user_id = 1;
             $lead->page_id = $page->id;
             $lead->data = $values;
             $lead->origem = null;

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 class LeadController extends Controller
 {
     //todo: verificar o perfil do usuário
-    public function getAllLeads(){
+    public function getAllLeads() {
         $user = User::find(Auth::id());
 
         $page_user = $user->page()->first();
@@ -47,7 +47,7 @@ class LeadController extends Controller
     }
 
     //todo: verificar o perfil do usuário
-    public function getLeadById($leadId){
+    public function getLeadById($leadId) {
         $user = User::find(Auth::id());
 
         $page_user = $user->page()->first();
@@ -90,7 +90,7 @@ class LeadController extends Controller
         $leadById->priority_icon = $leadById->priority->icon_url;
         $leadById->status->code = $leadById->status->id;
         $leadById->status->name = $leadById->status->status;
-        if (!empty($other->user)) {
+        if (!empty($leadById->user)) {
             $leadById->user;
             $leadById->avatar_url = $leadById->user->avatar_url;
         }
