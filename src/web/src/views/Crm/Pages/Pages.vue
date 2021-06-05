@@ -34,7 +34,7 @@
 					</Column>
 				</DataTable>
 
-				<Dialog :visible.sync="newPageDialog" :style="{width: '450px'}" header="Afodasess porrar Página" :modal="true" class="p-fluid">
+				<Dialog :visible.sync="newPageDialog" :style="{width: '450px'}" header="Criar Página" :modal="true" class="p-fluid">
 					<div class="p-field">
                         <InputText id="name" placeholder="nome" type="text" :class="{'p-invalid': errors.length && errors[0].name}" aria-describedby="name-help" v-model="page.name" />
                         <small class="p-invalid" v-if="errors.length && errors[0].name">{{errors[0].name[0]}}</small>

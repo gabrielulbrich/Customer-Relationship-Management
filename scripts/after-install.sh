@@ -1,4 +1,5 @@
 cd /var/www/crm-vue
+npm install
 npm run build
 now=$(date)
 

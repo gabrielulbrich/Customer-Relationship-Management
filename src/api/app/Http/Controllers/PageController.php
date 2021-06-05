@@ -60,6 +60,7 @@ class PageController extends Controller
             $user->password = app('hash')->make($request->input('password'));
             $user->save();
             $user->page()->attach([$page->id], ['profile_id' => 1 ]);
+            $user->page()->attach([$page->id], ['user_id' => 1, 'page_id' => $page->id, 'profile_id' => 1] );
             $user->avatar = $user->avatar_url;
 
             return response()->json([
