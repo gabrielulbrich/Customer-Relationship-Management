@@ -36,44 +36,44 @@
 
 				<Dialog :visible.sync="newPageDialog" :style="{width: '450px'}" header="Criar Página" :modal="true" class="p-fluid">
 					<div class="p-field">
-                        <InputText id="name" placeholder="nome" type="text" :class="{'p-invalid': errors.length && errors[0].name}" aria-describedby="name-help" v-model="page.name" />
-                        <small class="p-invalid" v-if="errors.length && errors[0].name">{{errors[0].name[0]}}</small>
+                        <InputText id="name" placeholder="nome" type="text" :class="{'p-invalid': errors.length && errors[0]['page.name']}" aria-describedby="name-help" v-model="page.name" />
+                        <small class="p-invalid" v-if="errors.length && errors[0]['page.name']">{{errors[0]['page.name'][0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="site" placeholder="site" type="text"  :class="{'p-invalid': errors.length && errors[0].site}" aria-describedby="site-help" v-model="page.site"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0].site">{{errors[0].site[0]}}</small>
+                        <InputText id="site" placeholder="site" type="text"  :class="{'p-invalid': errors.length && errors[0]['page.site']}" aria-describedby="site-help" v-model="page.site"/>
+                        <small class="p-invalid" v-if="errors.length && errors[0]['page.site']">{{errors[0]['page.site'][0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="epic" placeholder="epic" type="epic"  :class="{'p-invalid': errors.length && errors[0].epic}" aria-describedby="epic-help" v-model="page.epic"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0].epic">{{errors[0].epic[0]}}</small>
+                        <InputText id="epic" placeholder="epic" type="epic"  :class="{'p-invalid': errors.length && errors[0]['page.epic']}" aria-describedby="epic-help" v-model="page.epic"/>
+                        <small class="p-invalid" v-if="errors.length && errors[0]['page.epic']">{{errors[0]['page.epic'][0]}}</small>
                     </div>
 					<div class="p-field">
-                        <InputText id="token" placeholder="token" type="token"  :class="{'p-invalid': errors.length && errors[0].token}" aria-describedby="token-help" v-model="page.token"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0].token">{{errors[0].token[0]}}</small>
+                        <InputText id="token" placeholder="token" type="token"  :class="{'p-invalid': errors.length && errors[0]['page.token']}" aria-describedby="token-help" v-model="page.token"/>
+                        <small class="p-invalid" v-if="errors.length && errors[0]['page.token']">{{errors[0]['page.token'][0]}}</small>
                     </div>
 					<div class="p-field">
-                        <InputText id="refer" placeholder="refer" type="refer"  :class="{'p-invalid': errors.length && errors[0].refer}" aria-describedby="refer-help" v-model="page.refer"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0].refer">{{errors[0].refer[0]}}</small>
+                        <InputText id="refer" placeholder="refer" type="refer"  :class="{'p-invalid': errors.length && errors[0]['page.refer']}" aria-describedby="refer-help" v-model="page.refer"/>
+                        <small class="p-invalid" v-if="errors.length && errors[0]['page.refer']">{{errors[0]['page.refer'][0]}}</small>
                     </div>
 					<p>Informações de acesso do administrador da página:</p>
 					<div class="p-field">
-                        <InputText id="name" placeholder="nome" type="text" :class="{'p-invalid': errors.length && errors[0].name}" aria-describedby="name-help" v-model="user.name" />
-                        <small class="p-invalid" v-if="errors.length && errors[0].name">{{errors[0].name[0]}}</small>
+                        <InputText id="name" placeholder="nome" type="text" :class="{'p-invalid': errors.length && errors[0]['user.name']}" aria-describedby="name-help" v-model="user.name" />
+                        <small class="p-invalid" v-if="errors.length && errors[0]['user.name']">{{errors[0]['user.name'][0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputMask mask="999.999.999-99" id="cpf" placeholder="cpf" type="text"  :class="{'p-invalid': errors.length && errors[0].cpf}" aria-describedby="cpf-help" v-model="user.cpf"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0].cpf">{{errors[0].cpf[0]}}</small>
+                        <InputMask mask="999.999.999-99" id="cpf" placeholder="cpf" type="text"  :class="{'p-invalid': errors.length && errors[0]['user.cpf']}" aria-describedby="cpf-help" v-model="user.cpf"/>
+                        <small class="p-invalid" v-if="errors.length && errors[0]['user.cpf']">{{errors[0]['user.cpf'][0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="email" placeholder="email" type="email"  :class="{'p-invalid': errors.length && errors[0].email}" aria-describedby="email-help" v-model="user.email"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0].email">{{errors[0].email[0]}}</small>
+                        <InputText id="email" placeholder="email" type="email"  :class="{'p-invalid': errors.length && errors[0]['user.email']}" aria-describedby="email-help" v-model="user.email"/>
+                        <small class="p-invalid" v-if="errors.length && errors[0]['user.email']">{{errors[0]['user.email'][0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="password" placeholder="senha" type="password" :class="{'p-invalid': errors.length && errors[0].password}" aria-describedby="password-help" v-model="user.password"/>
+                        <InputText id="password" placeholder="senha" type="password" :class="{'p-invalid': errors.length && errors[0]['user.password']}" aria-describedby="password-help" v-model="user.password"/>
                     </div>
                     <div class="p-field">
-                        <InputText id="password_confirmation" placeholder="confirme sua senha" type="password"  :class="{'p-invalid': errors.length && errors[0].password}" aria-describedby="password_confirmation-help" v-model="user.password_confirmation"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0].password">{{errors[0].password[0]}}</small>
+                        <InputText id="password_confirmation" placeholder="confirme sua senha" type="password"  :class="{'p-invalid': errors.length && errors[0]['user.password']}" aria-describedby="password_confirmation-help" v-model="user.password_confirmation"/>
+                        <small class="p-invalid" v-if="errors.length && errors[0]['user.password']">{{errors[0]['user.password'][0]}}</small>
                     </div>
 					<template #footer>
 						<Button label="Cancel" icon="pi pi-times" class="p-button-text" @click="hideDialog"/>
@@ -182,16 +182,15 @@ export default {
 		async savePage(){
 			console.log(this.page)
 			this.errors = [];
-			try{
-				await api.post(`/page/create`, {'page': this.page, 'user': this.user })
-				.then(response => {
-					this.pages.push(response.data.page)
-					this.$toast.add({severity:'success', summary: 'Sucesso', detail: `Página ${response.data.page.name} criada.`, life: 3000});
-				})
-				await this.hideDialog();
-			} catch(error){
-				this.errors.push(error.response.data)
-			}
+			await api.post(`/page/create`, {'page': this.page, 'user': this.user })
+			.then(response => {
+				this.pages.push(response.data.page)
+				this.$toast.add({severity:'success', summary: 'Sucesso', detail: `Página ${response.data.page.name} criada.`, life: 3000});
+				this.hideDialog();
+			}).catch(error => {
+				this.errors.push(error.response.data);
+				console.log(this.errors)
+			});
 		},
 		async updatePage(){
 			this.errors = [];
