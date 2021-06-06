@@ -40,20 +40,12 @@
                         <small class="p-invalid" v-if="errors.length && errors[0]['page.name']">{{errors[0]['page.name'][0]}}</small>
                     </div>
                     <div class="p-field">
-                        <InputText id="site" placeholder="site" type="text"  :class="{'p-invalid': errors.length && errors[0]['page.site']}" aria-describedby="site-help" v-model="page.site"/>
+                        <InputText id="site" placeholder="domínio do site. Ex: site.com.br" type="text"  :class="{'p-invalid': errors.length && errors[0]['page.site']}" aria-describedby="site-help" v-model="page.site"/>
                         <small class="p-invalid" v-if="errors.length && errors[0]['page.site']">{{errors[0]['page.site'][0]}}</small>
                     </div>
                     <div class="p-field">
                         <InputText id="epic" placeholder="epic" type="epic"  :class="{'p-invalid': errors.length && errors[0]['page.epic']}" aria-describedby="epic-help" v-model="page.epic"/>
                         <small class="p-invalid" v-if="errors.length && errors[0]['page.epic']">{{errors[0]['page.epic'][0]}}</small>
-                    </div>
-					<div class="p-field">
-                        <InputText id="token" placeholder="token" type="token"  :class="{'p-invalid': errors.length && errors[0]['page.token']}" aria-describedby="token-help" v-model="page.token"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0]['page.token']">{{errors[0]['page.token'][0]}}</small>
-                    </div>
-					<div class="p-field">
-                        <InputText id="refer" placeholder="refer" type="refer"  :class="{'p-invalid': errors.length && errors[0]['page.refer']}" aria-describedby="refer-help" v-model="page.refer"/>
-                        <small class="p-invalid" v-if="errors.length && errors[0]['page.refer']">{{errors[0]['page.refer'][0]}}</small>
                     </div>
 					<p>Informações de acesso do administrador da página:</p>
 					<div class="p-field">

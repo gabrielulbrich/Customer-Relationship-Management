@@ -6,7 +6,7 @@
             <div :class="sidebarClass" @click="onSidebarClick" v-show="isSidebarVisible()">
                 <div class="layout-logo">
                     <router-link to="/">
-                        <h4 class="p-mb-0 p-text-uppercase white"><strong>{{site}}</strong></h4>
+                        <h5 class="p-mb-0 p-text-uppercase white"><strong>{{site}}</strong></h5>
                     </router-link>
                 </div>
 

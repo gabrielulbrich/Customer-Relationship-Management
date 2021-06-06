@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $hidden = [
-        'password', 'pivot', 'cpf', 'updated_at', 'created_at', 'page'
+        'password', 'pivot', 'cpf', 'updated_at', 'created_at'
     ];
 
     /**

@@ -16,7 +16,6 @@
         <transition name="layout-submenu-wrapper">
             <ul v-show="expanded">
                 <li><router-link class="p-link" :to="{name: 'profile'}"><button class="p-link"><i class="pi pi-fw pi-user"></i><span>Perfil</span></button></router-link></li>
-                <li><button class="p-link"><i class="pi pi-fw pi-inbox"></i><span>Notifications</span><span class="menuitem-badge">2</span></button></li>
                 <li><button class="p-link" @click="logout" ><i class="pi pi-fw pi-power-off"></i><span>Logout</span></button></li>
             </ul>
         </transition>

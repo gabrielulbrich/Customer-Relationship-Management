@@ -27,36 +27,37 @@ class UserController extends Controller
     //todo: BUSCAR APENAS POR USUARIOS DA PAGINA
     public function searchUsers(Request $request)
     {
+        $user = User::find(Auth::id());
         if (!empty($request->input('username'))){
-            $user = User::find(Auth::id());
-            $users = $user->users()->select( 'id','name','email', 'avatar_url', 'profile_id' )
+            $page_user = $user->page()->first();
+            $page_user = $page_user->users()
                 ->where( "name", "LIKE", "%{$request->input('username')}%" )
                 ->where("profile_id", "!=", [3,4,5])
                 ->limit('20')
                 ->get();
-                
         }else {
-            $user = User::find(Auth::id());
-            $users = $user->users()->select( 'id','name','email', 'avatar_url', 'profile_id' )
+            $page_user = $user->page()->first();
+            $page_user = $page_user->users()
                 ->where("profile_id", "!=", [3,4,5])
-                ->limit('20')
                 ->get();
         }
-        return response()->json($users);
+        return response()->json($page_user);
     }
 
     //todo: validar se a request foi feita pelo admin
     public function allUsersFromPage(){
         $user = User::find(Auth::id());
-        $users = $user->users()->get();
+        $page_user = $user->page()->first();
+        $page_user = $page_user->users()->where('user_id', '!=', 1)->get(); //remove ninguem da lista
+
         $profiles = Profile::all('id as code', 'profile as name');
-        foreach ($users as $user){
+        foreach ($page_user as $user){
             $user->avatar = $user->avatar_url;
             $user->profile = $user->profile()->first();
         }
 
         return response()->json([
-            'users' =>  $users,
+            'users' =>  $page_user,
             'profiles' => $profiles,
         ]);
     }
@@ -192,8 +193,7 @@ class UserController extends Controller
             $user->avatar_url = "/assets/user_icons/user.png";
             $user->password = app('hash')->make($request->input('password'));
             $user->save();
-            $user->page()->attach([$site->id], ['profile_id' => 2,
-                                                'status' => 'IN APPROVAL']);
+            $user->page()->attach([$site->id], ['profile_id' => 3]);
             $user->avatar = $user->avatar_url;
 
             return response()->json($user, 201);

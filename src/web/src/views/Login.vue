@@ -49,7 +49,7 @@
                     <small class="p-invalid" v-if="errors.length && errors[0].password">{{ errors[0].password[0] }}</small>
                 </div>
                 <div class="p-field">
-                    <InputText id="password_confirmation" type="password_confirmation" placeholder="informe sua senha" :class="{'p-invalid': errors.length && errors[0].password_confirmation}" v-model="new_account.password_confirmation" />
+                    <InputText id="password_confirmation" type="password" placeholder="informe sua senha" :class="{'p-invalid': errors.length && errors[0].password_confirmation}" v-model="new_account.password_confirmation" />
                     <small class="p-invalid" v-if="errors.length && errors[0].password_confirmation">{{ errors[0].password_confirmation[0] }}</small>
                     <small class="p-invalid" v-else-if="errors.length && errors[0].error">{{ errors[0].error.auth }}</small>
                 </div>

@@ -23,14 +23,6 @@
         </OverlayPanel>
 
 			</button>
-			<button class="p-link">
-				<span class="layout-topbar-item-text">Settings</span>
-				<span class="layout-topbar-icon pi pi-cog"></span>
-			</button>
-			<button class="p-link">
-				<span class="layout-topbar-item-text">User</span>
-				<span class="layout-topbar-icon pi pi-user"></span>
-			</button>
 		</div>
 	</div>
 </template>

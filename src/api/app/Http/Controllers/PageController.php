@@ -33,8 +33,8 @@ class PageController extends Controller
             'page.name' => 'required|string|max:255',
             'page.site' => 'required|string|max:255',
             'page.epic' => 'required|string|max:255',
-            'page.token' => 'required|string|max:255',
-            'page.refer' => 'required|string|max:255',
+            // 'page.token' => 'required|string|max:255',
+            // 'page.refer' => 'required|string|max:255',
             'user.name' => 'required|string',
             'user.email' => 'required|unique:users,email|email:rfc,dns',
             'user.cpf' => 'required|string|unique:users,cpf',
@@ -42,22 +42,22 @@ class PageController extends Controller
         ];
         $this->validate($request, $dataValidation, $this->messages);
 
-        try{
+        // try{
             $page = new Page;
             $page->name = $request->input('page')['name'];
             $page->site = $request->input('page')['site'];
             $page->epic = $request->input('page')['epic'];
-            $page->token = $request->input('page')['token'];
-            $page->refer = $request->input('page')['refer'];
+            $page->token = 'token';
+            $page->refer = 'refer';
             $page->logo_url = "/assets/page_icons/page.png";
             $page->save();
 
             $user = new User;
-            $user->name = $request->input('name');
-            $user->email = $request->input('email');
-            $user->cpf = $request->input('cpf');
+            $user->name = $request->input('user')['name'];
+            $user->email = $request->input('user')['email'];
+            $user->cpf = $request->input('user')['cpf'];
             $user->avatar_url = "/assets/user_icons/user.png";
-            $user->password = app('hash')->make($request->input('password'));
+            $user->password = app('hash')->make($request->input('user')['password']);
             $user->save();
             $user->page()->attach([$page->id], ['profile_id' => 1 ]);
             $user->page()->attach([$page->id], ['user_id' => 1, 'page_id' => $page->id, 'profile_id' => 1] ); //add user ninguem
@@ -68,13 +68,13 @@ class PageController extends Controller
                 'page'      => $page,
             ]);
 
-        } catch (\Exception $e) {
-            return response()->json( [
-            'entity' => 'pages',
-            'action' => 'create',
-            'result' => 'failed'
-            ], 409);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json( [
+        //     'entity' => 'pages',
+        //     'action' => 'create',
+        //     'result' => 'failed'
+        //     ], 409);
+        // }
     }
 
     //todo: validar se usuario master esta fazenndo requisicao
