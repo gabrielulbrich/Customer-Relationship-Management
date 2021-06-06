@@ -108,7 +108,7 @@ export default {
 	},
   methods: {
     redirectToDashBoard() {
-      this.$router.push({ path: this.$store.getters.pageName });
+      this.$router.push({ path: '/dashboard' });
     },
     async loginUser() {
       try{

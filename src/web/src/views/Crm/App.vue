@@ -61,7 +61,7 @@ export default {
     },
     methods: {
         pageUrl(to) {
-            return '/'+this.$store.getters.pageName+to
+            return to
         },
         onWrapperClick() {
             if (!this.menuClick) {

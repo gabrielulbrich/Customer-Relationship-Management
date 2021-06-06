@@ -26,7 +26,7 @@ const router = new Router({
 			component: () => import('./views/Login.vue')
 		},
 		{
-			path: '/:page',
+			path: '/',
 			name: 'dashboard',
 			meta: {
 				requiresAuth: true
