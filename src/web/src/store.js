@@ -7,7 +7,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   strict: true,
   state: {
-    authenticated: false,
     user: {
       id: "",
       name: "",
@@ -71,30 +70,22 @@ const store = new Vuex.Store({
     },
     UPDATE_NOTIFICATION(state, payload) {
       state.page.notification = payload
-    }
+    },
   },
   actions: {
-    loginUser(context, payload) {
-      return api.post(`/login`, {
+    async loginUser(context, payload) {
+      return await api.post(`/login`, {
         email: payload.email,
         password: payload.password
       })
       .then(response => {
-        window.localStorage.token = `Bearer ${response.data.token.original.token}`;
-        context.commit("UPDATE_USER", response.data.user);
+        localStorage.setItem('token', `Bearer ${response.data.token.original.token}`);
+        context.commit("UPDATE_USER", response.data.user, response.data.token.original.token);
         context.commit("UPDATE_PAGE", response.data.page);
         context.commit("UPDATE_PROFILE", response.data.user.profile);
       })
     },
-    me(context) {
-      return api.get(`/me`)
-      .then(response => {
-        context.commit("UPDATE_USER", response.data.user);
-        context.commit("UPDATE_PAGE", response.data.page);
-        context.commit("UPDATE_PROFILE", response.data.profile);
-      });
-    },
-    updateUser(context, payload){
+    updateUser(context, payload) {
       return api.put(`/user/update`, payload)
       .then(response => {
         context.commit("UPDATE_USER", response.data)
@@ -109,8 +100,6 @@ const store = new Vuex.Store({
     logout(context) {
       return new Promise((resolve, reject) => {
         localStorage.removeItem('token')
-        // remove the axios default header
-        // delete axios.defaults.headers.common['Authorization']
         resolve()
       })
     }
