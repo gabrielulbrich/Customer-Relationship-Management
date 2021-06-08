@@ -348,7 +348,7 @@ class LeadController extends Controller
             foreach ($value->fields as $field) {
                 $columns[$value->api][] = array(
                     'field' => 'data.'.$field['name'],
-                    'header' => $field['description']
+                    'header' => $field['name']
                 );
             }
         }
