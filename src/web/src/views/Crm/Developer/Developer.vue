@@ -12,6 +12,7 @@
             <InputText v-model="newApiName" placeholder=""/>
             <Button label=" Novo" class="p-mr-2 p-mb-2 pi pi-plus" @click.prevent="newApi()"/>
           </div>
+          <small class="p-invalid" v-if="errors.api">API já existe</small>
         </div>
 				<Accordion>
           <div v-for="(api, index) in apis" :key="index">
@@ -96,7 +97,9 @@ export default {
 					{name: 'Numérico', code: 'numeric'},
           {name: 'Checkbox', code: 'boolean'}
       ],
-			errors: [],
+			errors: {
+        api: false
+      },
 		}
 	},
 	created() {
@@ -127,6 +130,18 @@ export default {
       });
     },
     newApi() {
+      this.errors.api = false;
+
+      this.apis.forEach(api => {
+        if (this.newApiName === api.api){
+          this.errors.api = true;
+        }
+      });
+      
+      if (!this.errors.api)
+        this.addApi();
+    },
+    addApi() {
       this.apis.push({
         "weight": this.apis.length >= 1 ? parseInt(this.apis.length) + 1 : 1,
         "api" : this.newApiName,
@@ -186,9 +201,6 @@ export default {
         this.$toast.add({severity:'error', summary: 'Ocorreu algum erro, contate o administrador', detail: `APIs Salvas.`, life: 3000});
       }
     },
-    test() {
-      console.log('testt');
-    }
 	},
   computed: {
     ...mapGetters([
