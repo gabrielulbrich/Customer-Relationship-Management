@@ -56,12 +56,11 @@ $router->group(['prefix' => 'api', 'middleware' => 'auth'], function ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('login', 'AuthController@login');
     $router->post('new-account', 'UserController@newAccount');
-
-//    $router->post('/api/login', 'UserController@login');
-//
-//    $router->post('/api/user', 'UserController@store');
-//    $router->get('/api/user/{id}', 'UserController@view');
-//    $router->put('/api/user/{id}', 'UserController@update');
 });
 
 Route::post('{page}/{api}', 'ApiController@storeData');
+
+
+Route::post('api/recover-password', 'SendMailController@sendMail');
+
+Route::post('api/reset-password', 'UserController@resetPassword');

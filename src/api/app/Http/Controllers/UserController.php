@@ -207,4 +207,27 @@ class UserController extends Controller
             ], 409);
         }
     }
+
+    public function resetPassword(Request $request) {
+        $dataValidation = [
+            'token' => 'required|string',
+            'password' => 'required|confirmed|max:255|min:6',
+        ];
+
+        $this->validate($request, $dataValidation, $this->messages);
+
+        $user = new User;
+
+        $user = User::where('token', $request->input('token'))->first();
+
+        if (empty($user))
+            return response()->json(['invalid_token' => ['Token Inválido']], 422);
+
+        $user->password = app('hash')->make($request->input('password'));
+        $user->token = null;
+
+        $user->save();
+
+        return response()->json(['success' => ['Senha Alterada']], 200);
+    }
 }

@@ -65,10 +65,10 @@
             <div>
                 <h5 class="h2">Recuperar senha</h5>
                 <div class="p-field">
-                    <InputText id="email" type="email" placeholder="informe seu e-mail" v-model="login.email" :class="{'p-invalid': errors.length && errors[0].email}" aria-describedby="username-help"/>
-                    <small class="p-invalid" v-if="errors.length && errors[0].email">{{ errors[0].email[0] }}</small>
+                    <InputText id="email" type="email" placeholder="informe seu e-mail" v-model="login.email" :class="{'p-invalid': errors.length && errors[0].recover_email}" aria-describedby="username-help"/>
+                    <small class="p-invalid" v-if="errors.length && errors[0].recover_email">{{ errors[0].recover_email[0] }}</small>
                 </div>
-                <Button label="Trocar senha" class="p-mr-2 p-mb-2" @click.prevent="loginUser" />
+                <Button label="Trocar senha" class="p-mr-2 p-mb-2" @click.prevent="recoverPassword" />
                 <div class="p-d-flex p-mt-3">
                     <Button label="voltar" class="p-button-secondary p-button-text p-text-left" @click="forgot = false" />
                 </div>
@@ -131,6 +131,17 @@ export default {
         this.errors = [];
 				this.errors.push(error.response.data)
       }
+    },
+    recoverPassword() {
+      api.post(`/recover-password`, {'recover_email': this.login.email})
+      .then(response => {
+        this.$toast.add({severity:'success', summary: 'Sucesso', detail: `E-mail enviado para ${this.login.email} verifique sua caixa de correio.`, life: 3000});
+        this.forgot = false;
+        sessionStorage.setItem("SessionTokenRecoverPassword", response.data.token);
+      }).catch(error => {
+        this.errors = [];
+        this.errors.push(error.response.data)
+      })
     }
   },
 }

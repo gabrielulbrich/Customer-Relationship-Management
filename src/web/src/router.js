@@ -9,6 +9,7 @@ import Users from '@/views/Crm/Users/Users.vue';
 import Pages from '@/views/Crm/Pages/Pages.vue';
 import Developer from '@/views/Crm/Developer/Developer.vue';
 import Data from '@/views/Crm/Data/Data.vue';
+import RecoverPassword from '@/views/Crm/RecoverPassword/RecoverPassword.vue'
 
 Vue.use(Router);
 
@@ -20,6 +21,11 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: () => import('./views/Login.vue')
+    },
+    {
+      path: '/recover-password/:token',
+      name: 'RecoverPassword',
+      component: () => import('./views/Crm/RecoverPassword/RecoverPassword.vue')
     },
     {
       path: '/',
