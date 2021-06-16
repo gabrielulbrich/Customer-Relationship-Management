@@ -78,7 +78,7 @@
       <div class="p-col-4" style="min-width: 350px">
         <Carousel v-if="anotherLeads && anotherLeads.length" :value="anotherLeads" :numVisible="1" :numScroll="1" :circular="true" style="background: #FFF;">
           <template #header>
-            <h2 class="title">Histórico</h2>
+            <h2 class="title">RELACIONADOS</h2>
           </template>
           <template #item="slotProps">
             <div class="car-item">
