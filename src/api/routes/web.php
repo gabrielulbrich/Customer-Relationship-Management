@@ -58,9 +58,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('new-account', 'UserController@newAccount');
 });
 
-Route::post('{page}/{api}', 'ApiController@storeData');
-
-
 Route::post('api/recover-password', 'SendMailController@sendMail');
 
 Route::post('api/reset-password', 'UserController@resetPassword');
+
+Route::post('{page}/{api}', 'ApiController@storeData');
